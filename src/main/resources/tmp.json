@@ -1,0 +1,139 @@
+{
+  "id": "e7a15a80-efcd-4837-95e6-475d8a42bbb7",
+  "responsibleUnit": "AROS",
+  "type": "AMBULANT",
+  "priority": "AKUT_DAYTIME",
+  "startTime": {
+    "dayOfMonth": 25,
+    "dayOfWeek": "WEDNESDAY",
+    "dayOfYear": 25,
+    "month": "JANUARY",
+    "monthValue": 1,
+    "year": 2017,
+    "hour": 11,
+    "minute": 46,
+    "nano": 916000000,
+    "second": 48,
+    "chronology": {
+      "id": "ISO",
+      "calendarType": "iso8601"
+    }
+  },
+  "endTime": null,
+  "treatmentStart": null,
+  "referral": {
+    "cause": {
+      "code": "CAUSE_MEDICAL_ASSESSMENT_WITH_CONSULT"
+    },
+    "type": "GENINDLAEGGELSE",
+    "referringParty": "AAR_KIR_CLI",
+    "ownChoise": null,
+    "time": {
+      "dayOfMonth": 25,
+      "dayOfWeek": "WEDNESDAY",
+      "dayOfYear": 25,
+      "month": "JANUARY",
+      "monthValue": 1,
+      "year": 2017,
+      "hour": 11,
+      "minute": 46,
+      "nano": 918000000,
+      "second": 48,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    }
+  },
+  "residencyList": [
+    {
+      "unit": null,
+      "abcense": null,
+      "startTime": {
+        "dayOfMonth": 1,
+        "dayOfWeek": "MONDAY",
+        "dayOfYear": 244,
+        "month": "SEPTEMBER",
+        "monthValue": 9,
+        "year": 2014,
+        "hour": 0,
+        "minute": 0,
+        "nano": 0,
+        "second": 0,
+        "chronology": {
+          "id": "ISO",
+          "calendarType": "iso8601"
+        }
+      },
+      "endTime": {
+        "dayOfMonth": 1,
+        "dayOfWeek": "THURSDAY",
+        "dayOfYear": 245,
+        "month": "SEPTEMBER",
+        "monthValue": 9,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "nano": 0,
+        "second": 0,
+        "chronology": {
+          "id": "ISO",
+          "calendarType": "iso8601"
+        }
+      }
+    },
+    {
+      "unit": null,
+      "abcense": null,
+      "startTime": {
+        "dayOfMonth": 1,
+        "dayOfWeek": "THURSDAY",
+        "dayOfYear": 245,
+        "month": "SEPTEMBER",
+        "monthValue": 9,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "nano": 0,
+        "second": 0,
+        "chronology": {
+          "id": "ISO",
+          "calendarType": "iso8601"
+        }
+      },
+      "endTime": null
+    }
+  ],
+  "actionDiagnose": {
+    "type": null,
+    "code": "OPERATION_DESTRUCTION",
+    "alternative": "OPERATION_EXCISION",
+    "laterRemoval": false
+  },
+  "biDiagnose": null,
+  "paymentInformations": [
+    {
+      "paymentAgreement": "MONTHLY",
+      "payer": "MUNICIPALITYPAYED",
+      "specializationLevel": "SPECIALIZATION_REGIONAL",
+      "startTime": {
+        "dayOfMonth": 25,
+        "dayOfWeek": "WEDNESDAY",
+        "dayOfYear": 25,
+        "month": "JANUARY",
+        "monthValue": 1,
+        "year": 2017,
+        "hour": 11,
+        "minute": 46,
+        "nano": 919000000,
+        "second": 48,
+        "chronology": {
+          "id": "ISO",
+          "calendarType": "iso8601"
+        }
+      },
+      "endTime": null
+    }
+  ],
+  "procedures": []
+}
