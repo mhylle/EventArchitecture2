@@ -15,9 +15,7 @@ public class EpisodeOfCareElementRoutes
   @Produces(MediaType.APPLICATION_JSON)
   public List<EpisodeOfCareElement> episodeOfCareElement()
   {
-    System.out.println("Standard Get ");
     List<EpisodeOfCareElement> episodeOfCareElements = Repository.getInstance().getEpisodeOfCareElements();
-    System.out.println("Standard Get ");
     return episodeOfCareElements;
   }
 
@@ -26,7 +24,6 @@ public class EpisodeOfCareElementRoutes
   @Produces(MediaType.APPLICATION_JSON)
   public EpisodeOfCareElement episodeOfCareElement(@PathParam("id") String id)
   {
-    System.out.println("Get Episode of Care Elements with id");
     return Repository.getInstance().getEpisodeOfCareElements().stream()
       .filter(episodeOfCareElement -> episodeOfCareElement.getId().toString().equals(id))
       .findFirst().orElse(null);
@@ -37,8 +34,6 @@ public class EpisodeOfCareElementRoutes
   @Consumes(MediaType.APPLICATION_JSON)
   public String episodeOfCareElement(EpisodeOfCareElement episodeOfCareElement)
   {
-    System.out.println("episodeOfCareElement = " + episodeOfCareElement);
-    System.out.println("Creating EpisodeOfCareElement");
     Repository.getInstance().addEpisodeOfCareElement(episodeOfCareElement);
     return episodeOfCareElement.getId();
   }

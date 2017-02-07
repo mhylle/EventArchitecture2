@@ -2,12 +2,8 @@ package info.mhylle.playground.lpr3;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import info.mhylle.playground.lpr3.model.Contact;
-import info.mhylle.playground.lpr3.model.Diagnose;
-import info.mhylle.playground.lpr3.model.EpisodeOfCareElement;
-import info.mhylle.playground.lpr3.model.Patient;
-import info.mhylle.playground.lpr3.model.SKS.SksCode;
-import info.mhylle.playground.lpr3.model.SKS.SorCode;
+import info.mhylle.playground.lpr3.model.*;
+import info.mhylle.playground.lpr3.model.SKS.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,6 +17,7 @@ public class DataGenerator
 {
   private static final int NR_OF_PATIENTS = 30;
   private static final int NR_OF_EPISODES_OF_CARE = 4;
+  private static final int NR_OF_REFERRALS = 6;
   private List<String> firstnames = new ArrayList<>();
   private List<String> lastnames = new ArrayList<>();
   private List<SksCode> labels = new ArrayList<>();
@@ -28,9 +25,11 @@ public class DataGenerator
   private static final String CONTACTS_SAVEFILE = "c:/temp/EventArchitecture/contacts.json";
   private static final String EPISODEOFCAREELEMENTS_SAVEFILE = "c:/temp/EventArchitecture/episodeOfCareElements.json";
   private static final String PATIENTS_SAVEFILE = "c:/temp/EventArchitecture/patients.json";
+  private static final String REFERRALS_SAVEFILE = "c:/temp/EventArchitecture/referrals.json";
   private List<Patient> patients;
   private List<Contact> contacts;
   private List<Diagnose> diagnoses;
+  private List<Referral> referrals;
   private List<EpisodeOfCareElement> episodeOfCareElements;
 
   @Before
@@ -105,7 +104,7 @@ public class DataGenerator
   {
     loadEpisodesOfCare();
     Random random = new Random();
-    for (int i = 0;i<NR_OF_EPISODES_OF_CARE; i++) {
+    for (int i = 0; i < NR_OF_EPISODES_OF_CARE; i++) {
       SksCode label = labels.get(random.nextInt(labels.size()));
       SorCode responsibleUnit = responsibleUnits.get(random.nextInt(responsibleUnits.size()));
 
@@ -127,6 +126,34 @@ public class DataGenerator
     }
 
     saveEpisodesOfCareElements();
+  }
+
+  @Test
+  public void generateReferrals()
+  {
+    loadReferrals();
+
+    Random random = new Random();
+    for (int i = 0; i < NR_OF_REFERRALS; i++) {
+      Referral referral = new Referral();
+      referral.setType(ReferralSksCode.values()[random.nextInt(ReferralSksCode.values().length)]);
+      referral.setReferringParty(SorCode.values()[random.nextInt(SorCode.values().length)]);
+      referral.setCause(CauseSksCode.values()[random.nextInt(CauseSksCode.values().length)]);
+      if (random.nextDouble() < 0.8) {
+        referral.setOwnChoise(FreeChoiseSksCode.ALDB00);
+      } else {
+        if (random.nextDouble() < 0.5) {
+          referral.setOwnChoise(FreeChoiseSksCode.ALDB01);
+        } else {
+          referral.setOwnChoise(FreeChoiseSksCode.ALDB02);
+        }
+      }
+      LocalDateTime startTime = createDate(random);
+      referral.seteferredAt(startTime);
+      referrals.add(referral);
+    }
+
+    saveReferrals();
   }
 
   private LocalDateTime createDate(Random random)
@@ -165,6 +192,18 @@ public class DataGenerator
       e.printStackTrace();
     }
   }
+  public void saveReferrals()
+  {
+    Gson gson = new Gson();
+    String jSONReferrals= gson.toJson(this.referrals);
+
+    try (FileWriter file = new FileWriter(REFERRALS_SAVEFILE)) {
+      file.write(jSONReferrals);
+      file.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   private void loadPatients()
   {
@@ -178,6 +217,21 @@ public class DataGenerator
     }
     if (patients == null) {
       patients = new ArrayList<>();
+    }
+  }
+
+  private void loadReferrals()
+  {
+    Gson gson = new Gson();
+    try {
+      patients = gson.fromJson(new FileReader(new File(REFERRALS_SAVEFILE)), new TypeToken<List<Referral>>()
+      {
+      }.getType());
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    if (referrals == null) {
+      referrals = new ArrayList<>();
     }
   }
 

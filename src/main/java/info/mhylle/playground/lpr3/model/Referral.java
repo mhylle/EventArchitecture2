@@ -1,20 +1,21 @@
 package info.mhylle.playground.lpr3.model;
 
-import info.mhylle.playground.lpr3.model.SKS.SksCode;
-import info.mhylle.playground.lpr3.model.SKS.SorCode;
+import info.mhylle.playground.lpr3.adaptors.LocalDateTimeAdapter;
+import info.mhylle.playground.lpr3.model.SKS.*;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Referral implements DataElement
 {
   private UUID id;
-  private SksCode cause;
-  private SksCode type;
+  private CauseSksCode cause;
+  private ReferralSksCode type;
   private SorCode referringParty;
-  private SksCode ownChoise;
-  private LocalDateTime time;
+  private FreeChoiseSksCode ownChoice;
+  private LocalDateTime referred_at;
 
   public Referral()
   {
@@ -27,26 +28,29 @@ public class Referral implements DataElement
     return id.toString();
   }
 
-  public SksCode getCause()
+  @XmlElement(name = "Cause")
+  public CauseSksCode getCause()
   {
     return cause;
   }
 
-  public void setCause(SksCode cause)
+  public void setCause(CauseSksCode cause)
   {
     this.cause = cause;
   }
 
-  public SksCode getType()
+  @XmlElement(name = "Type")
+  public ReferralSksCode getType()
   {
     return type;
   }
 
-  public void setType(SksCode type)
+  public void setType(ReferralSksCode type)
   {
     this.type = type;
   }
 
+  @XmlElement(name = "ReferringParty")
   public SorCode getReferringParty()
   {
     return referringParty;
@@ -57,24 +61,27 @@ public class Referral implements DataElement
     this.referringParty = referringParty;
   }
 
-  public SksCode getOwnChoise()
+  @XmlElement(name = "OwnChoice")
+  public FreeChoiseSksCode getOwnChoise()
   {
-    return ownChoise;
+    return ownChoice;
   }
 
-  public void setOwnChoise(SksCode ownChoise)
+  public void setOwnChoise(FreeChoiseSksCode ownChoise)
   {
-    this.ownChoise = ownChoise;
+    this.ownChoice = ownChoise;
   }
 
-  public LocalDateTime getTime()
+  @XmlElement(name = "ReferredAt")
+  @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+  public LocalDateTime getReferredAt()
   {
-    return time;
+    return referred_at;
   }
 
-  public void setTime(LocalDateTime time)
+  public void setReferredAt(LocalDateTime time)
   {
-    this.time = time;
+    this.referred_at = time;
   }
 
   @Override public String toString()
@@ -84,8 +91,8 @@ public class Referral implements DataElement
       ", cause=" + cause +
       ", type=" + type +
       ", referringParty=" + referringParty +
-      ", ownChoise=" + ownChoise +
-      ", time=" + time +
+      ", ownChoise=" + ownChoice +
+      ", time=" + referred_at +
       '}';
   }
 

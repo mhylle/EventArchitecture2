@@ -16,6 +16,7 @@ public class Repository
   private static final String CONTACTS_SAVEFILE = "c:/temp/EventArchitecture/contacts.json";
   private static final String EPISODEOFCAREELEMENTS_SAVEFILE = "c:/temp/EventArchitecture/episodeOfCareElements.json";
   private static final String PATIENTS_SAVEFILE = "c:/temp/EventArchitecture/patients.json";
+  private static final String REFERRALS_SAVEFILE = "c:/temp/EventArchitecture/referrals.json";
   private List<Patient> patients;
   private List<Contact> contacts;
   private List<Diagnose> diagnoses;
@@ -26,7 +27,6 @@ public class Repository
 
   private Repository()
   {
-
     loadData();
   }
 
@@ -36,10 +36,12 @@ public class Repository
     contacts = new ArrayList<>();
     episodeOfCareElements = new ArrayList<>();
     diagnoses = new ArrayList<>();
+    referrals= new ArrayList<>();
 
     File patientSaveFile = new File(PATIENTS_SAVEFILE);
     File episodeOfCareElementsSaveFile = new File(EPISODEOFCAREELEMENTS_SAVEFILE);
     File contactsSaveFile = new File(CONTACTS_SAVEFILE);
+    File referralsSaveFile = new File(REFERRALS_SAVEFILE);
     boolean loadedData = false;
     if (patientSaveFile.exists()) {
       loadPatients();
@@ -51,6 +53,14 @@ public class Repository
     }
     if (contactsSaveFile.exists()) {
       loadContacts();
+      loadedData = true;
+    }
+    if (contactsSaveFile.exists()) {
+      loadContacts();
+      loadedData = true;
+    }
+    if (referralsSaveFile.exists()) {
+      loadReferrals();
       loadedData = true;
     }
 
@@ -83,6 +93,16 @@ public class Repository
     Gson gson = new Gson();
     try (FileReader reader = new FileReader(new File(CONTACTS_SAVEFILE))){
       contacts = gson.fromJson(reader, new TypeToken<List<Contact>>()
+      {
+      }.getType());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  private void loadReferrals() {
+    Gson gson = new Gson();
+    try (FileReader reader = new FileReader(new File(REFERRALS_SAVEFILE))){
+      referrals = gson.fromJson(reader, new TypeToken<List<Referral>>()
       {
       }.getType());
     } catch (IOException e) {
@@ -157,7 +177,6 @@ public class Repository
   {
     Contact contact = new Contact();
     setBaseContactInformation(contact, responsibleUnit, type, priority, startTime);
-    createReferral(contact);
     createResidency(contact);
     createActionDiagnosis(contact);
     createPaymentInformation(contact);
@@ -192,16 +211,6 @@ public class Repository
     residency2.setStartTime(LocalDateTime.of(2016, 9, 1, 0, 0));
     contact.addResidency(residency1);
     contact.addResidency(residency2);
-  }
-
-  private void createReferral(Contact contact)
-  {
-    Referral referral = new Referral();
-    referral.setCause(SksCode.CAUSE_MEDICAL_ASSESSMENT_WITH_CONSULT);
-    referral.setType(SksCode.GENINDLAEGGELSE);
-    referral.setReferringParty(SorCode.AAR_KIR_CLI);
-    referral.setTime(LocalDateTime.now());
-    contact.setReferral(referral);
   }
 
   private void setBaseContactInformation(Contact contact, SorCode responsibleUnit, SksCode type, SksCode priority, LocalDateTime startTime)
