@@ -149,7 +149,7 @@ public class DataGenerator
         }
       }
       LocalDateTime startTime = createDate(random);
-      referral.seteferredAt(startTime);
+      referral.setReferredAt(startTime);
       referrals.add(referral);
     }
 
