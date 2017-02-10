@@ -14,8 +14,9 @@ public class Referral implements DataElement
   private CauseSksCode cause;
   private ReferralSksCode type;
   private SorCode referringParty;
-  private FreeChoiseSksCode ownChoice;
+  private FreeChoiceSksCode ownChoice;
   private LocalDateTime referred_at;
+  private Patient patient;
 
   public Referral()
   {
@@ -26,6 +27,17 @@ public class Referral implements DataElement
   public String getId()
   {
     return id.toString();
+  }
+
+  @XmlElement(name = "Patient")
+  public Patient getPatient()
+  {
+    return patient;
+  }
+
+  public void setPatient(Patient patient)
+  {
+    this.patient = patient;
   }
 
   @XmlElement(name = "Cause")
@@ -62,12 +74,12 @@ public class Referral implements DataElement
   }
 
   @XmlElement(name = "OwnChoice")
-  public FreeChoiseSksCode getOwnChoise()
+  public FreeChoiceSksCode getOwnChoise()
   {
     return ownChoice;
   }
 
-  public void setOwnChoise(FreeChoiseSksCode ownChoise)
+  public void setOwnChoise(FreeChoiceSksCode ownChoise)
   {
     this.ownChoice = ownChoise;
   }
@@ -91,7 +103,7 @@ public class Referral implements DataElement
       ", cause=" + cause +
       ", type=" + type +
       ", referringParty=" + referringParty +
-      ", ownChoise=" + ownChoice +
+      ", ownChoice=" + ownChoice +
       ", time=" + referred_at +
       '}';
   }

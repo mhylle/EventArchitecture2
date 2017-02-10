@@ -3,7 +3,7 @@ package info.mhylle.playground.lpr3.model.SKS;
 /**
  * Created by mnh on 07-02-2017.
  */
-public enum FreeChoiseSksCode
+public enum FreeChoiceSksCode
 {
   ALDB00("Inget fritvalg"),
   ALDB01("frit sygehusvalg"),
@@ -11,7 +11,7 @@ public enum FreeChoiseSksCode
 
   private String code;
 
-  FreeChoiseSksCode(String code)
+  FreeChoiceSksCode(String code)
   {
     this.code = code;
   }

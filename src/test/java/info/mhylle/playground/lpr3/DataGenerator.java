@@ -140,12 +140,12 @@ public class DataGenerator
       referral.setReferringParty(SorCode.values()[random.nextInt(SorCode.values().length)]);
       referral.setCause(CauseSksCode.values()[random.nextInt(CauseSksCode.values().length)]);
       if (random.nextDouble() < 0.8) {
-        referral.setOwnChoise(FreeChoiseSksCode.ALDB00);
+        referral.setOwnChoise(FreeChoiceSksCode.ALDB00);
       } else {
         if (random.nextDouble() < 0.5) {
-          referral.setOwnChoise(FreeChoiseSksCode.ALDB01);
+          referral.setOwnChoise(FreeChoiceSksCode.ALDB01);
         } else {
-          referral.setOwnChoise(FreeChoiseSksCode.ALDB02);
+          referral.setOwnChoise(FreeChoiceSksCode.ALDB02);
         }
       }
       LocalDateTime startTime = createDate(random);
