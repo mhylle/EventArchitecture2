@@ -131,6 +131,7 @@ public class DataGenerator
   @Test
   public void generateReferrals()
   {
+    loadPatients();
     loadReferrals();
 
     Random random = new Random();
@@ -150,6 +151,12 @@ public class DataGenerator
       }
       LocalDateTime startTime = createDate(random);
       referral.setReferredAt(startTime);
+      if (patients.size() >0 ) {
+        if (random.nextDouble() < 0.75) {
+          Patient patient = patients.get(random.nextInt(patients.size()));
+          referral.setPatient(patient);
+        }
+      }
       referrals.add(referral);
     }
 
@@ -224,7 +231,7 @@ public class DataGenerator
   {
     Gson gson = new Gson();
     try {
-      patients = gson.fromJson(new FileReader(new File(REFERRALS_SAVEFILE)), new TypeToken<List<Referral>>()
+      referrals = gson.fromJson(new FileReader(new File(REFERRALS_SAVEFILE)), new TypeToken<List<Referral>>()
       {
       }.getType());
     } catch (FileNotFoundException e) {
