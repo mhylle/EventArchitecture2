@@ -1,4 +1,4 @@
-package info.mhylle.playground.lpr3.model.SKS;
+package info.mhylle.playground.lpr3.model.SKS.referral;
 
 /**
  * Created by mnh on 25-01-2017.

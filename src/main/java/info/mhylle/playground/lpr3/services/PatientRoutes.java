@@ -25,7 +25,7 @@ public class PatientRoutes
   public Patient patients(@PathParam("id") String id)
   {
     return Repository.getInstance().getPatients().stream()
-      .filter(patient -> patient.getId().toString().equals(id))
+      .filter(patient -> patient.getId().equals(id))
       .findFirst().orElse(null);
   }
 
@@ -34,7 +34,7 @@ public class PatientRoutes
   public String patients(Patient patient)
   {
     Repository.getInstance().addPatient(patient);
-    return patient.getId();
+    return patient.getId().toString();
   }
 
   @PUT
@@ -62,7 +62,7 @@ public class PatientRoutes
     }
     if (p != null && e != null) {
       System.out.println("adding new episode of care element to patient");
-      p.addEpisodeOfCareElement(e);
+      p.addEpisodeOfCareElement(e.getId());
       System.out.println("New p = " + p);
     }
     Repository.getInstance().updatePatient(p);

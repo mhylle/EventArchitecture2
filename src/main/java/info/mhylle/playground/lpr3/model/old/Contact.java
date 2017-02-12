@@ -1,6 +1,7 @@
-package info.mhylle.playground.lpr3.model;
+package info.mhylle.playground.lpr3.model.old;
 
 import info.mhylle.playground.lpr3.adaptors.LocalDateTimeAdapter;
+import info.mhylle.playground.lpr3.model.SKS.encounter.Type;
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
 
@@ -15,7 +16,7 @@ public class Contact implements DataElement
 {
   private UUID id;
   private SorCode responsibleUnit;
-  private SksCode type;
+  private Type type;
   private SksCode priority;
   @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
   private LocalDateTime startTime;
@@ -28,14 +29,14 @@ public class Contact implements DataElement
   private List<Residency> residencyList;
   private Diagnose actionDiagnose;
   private Diagnose biDiagnose;
-  private List<PaymentInformation> paymentInformations;
+  private List<PaymentInformation> paymentInformation;
   private List<Procedure> procedures;
 
   public Contact()
   {
     id = UUID.randomUUID();
     residencyList = new ArrayList<>();
-    paymentInformations = new ArrayList<>();
+    paymentInformation = new ArrayList<>();
     procedures = new ArrayList<>();
 
   }
@@ -56,12 +57,12 @@ public class Contact implements DataElement
     this.responsibleUnit = responsibleUnit;
   }
 
-  public SksCode getType()
+  public Type getType()
   {
     return type;
   }
 
-  public void setType(SksCode type)
+  public void setType(Type type)
   {
     this.type = type;
   }
@@ -151,19 +152,19 @@ public class Contact implements DataElement
     this.biDiagnose = biDiagnose;
   }
 
-  public List<PaymentInformation> getPaymentInformations()
+  public List<PaymentInformation> getPaymentInformation()
   {
-    return paymentInformations;
+    return paymentInformation;
   }
 
   public void addPaymentInformation(PaymentInformation paymentInformation)
   {
-    this.paymentInformations.add(paymentInformation);
+    this.paymentInformation.add(paymentInformation);
   }
 
   public void removePaymentInformation(PaymentInformation paymentInformation)
   {
-    this.paymentInformations.remove(paymentInformation);
+    this.paymentInformation.remove(paymentInformation);
   }
 
   public List<Procedure> getProcedures()

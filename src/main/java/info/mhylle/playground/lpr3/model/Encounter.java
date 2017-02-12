@@ -1,19 +1,20 @@
 package info.mhylle.playground.lpr3.model;
 
-import info.mhylle.playground.lpr3.model.SKS.ReasonSksCode;
-import info.mhylle.playground.lpr3.model.SKS.referral.StatusCode;
+import info.mhylle.playground.lpr3.model.SKS.encounter.EncounterClass;
+import info.mhylle.playground.lpr3.model.SKS.encounter.StatusCode;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.UUID;
 
-public class Referral {
+
+public class Encounter {
     private UUID id;
     private StatusCode status;
+    private EncounterClass encounterClass;
     private UUID patient;
-    private ReasonSksCode reason;
-    private UUID encounter;
+    private Period period;
 
-    public Referral() {
+    public Encounter() {
         id = UUID.randomUUID();
     }
 
@@ -25,7 +26,6 @@ public class Referral {
     public void setId(UUID id) {
         this.id = id;
     }
-
     @XmlElement(name = "Status")
     public StatusCode getStatus() {
         return status;
@@ -33,6 +33,15 @@ public class Referral {
 
     public void setStatus(StatusCode status) {
         this.status = status;
+    }
+
+    @XmlElement(name = "EncounterClass")
+    public EncounterClass getEncounterClass() {
+        return encounterClass;
+    }
+
+    public void setEncounterClass(EncounterClass encounterClass) {
+        this.encounterClass = encounterClass;
     }
 
     @XmlElement(name = "Patient")
@@ -44,21 +53,12 @@ public class Referral {
         this.patient = patient;
     }
 
-    @XmlElement(name = "Reason")
-    public ReasonSksCode getReason() {
-        return reason;
+    @XmlElement(name = "Period")
+    public Period getPeriod() {
+        return period;
     }
 
-    public void setReason(ReasonSksCode reason) {
-        this.reason = reason;
-    }
-
-    @XmlElement(name = "Encounter")
-    public UUID getEncounter() {
-        return encounter;
-    }
-
-    public void setEncounter(UUID encounter) {
-        this.encounter = encounter;
+    public void setPeriod(Period period) {
+        this.period = period;
     }
 }

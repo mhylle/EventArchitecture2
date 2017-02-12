@@ -2,8 +2,8 @@ package info.mhylle.playground.lpr3;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import info.mhylle.playground.lpr3.model.EpisodeOfCareElement;
-import info.mhylle.playground.lpr3.model.Patient;
+import info.mhylle.playground.lpr3.model.old.EpisodeOfCareElement;
+import info.mhylle.playground.lpr3.model.old.Patient;
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
 import org.junit.Before;

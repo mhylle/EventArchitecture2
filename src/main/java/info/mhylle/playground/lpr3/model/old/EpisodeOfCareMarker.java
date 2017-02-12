@@ -1,4 +1,4 @@
-package info.mhylle.playground.lpr3.model;
+package info.mhylle.playground.lpr3.model.old;
 
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
 

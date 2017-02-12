@@ -3,7 +3,7 @@ package info.mhylle.playground.lpr3.model.SKS;
 /**
  * Created by mnh on 25-01-2017.
  */
-public enum CauseSksCode
+public enum ReasonSksCode
 {
   HEAD_AND_CANCER_PACKAGE_START("AFB02A"),
   HEAD_AND_CANCER_ELUCIDATION("AFB02B"),
@@ -20,7 +20,7 @@ public enum CauseSksCode
 
   private String code;
 
-  CauseSksCode(String code)
+  ReasonSksCode(String code)
   {
     this.code = code;
   }

@@ -1,81 +1,81 @@
 package info.mhylle.playground.lpr3.model;
 
+import info.mhylle.playground.lpr3.adaptors.LocalDateTimeAdapter;
+import info.mhylle.playground.lpr3.model.SKS.patient.GenderType;
+
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@XmlRootElement
-public class Patient implements DataElement
-{
-  private String id;
-  private String alternativeId;
-  private String name;
-  private List<EpisodeOfCareElement> episodeOfCareElements;
 
-  public Patient()
-  {
-    this.id = UUID.randomUUID().toString();
-    episodeOfCareElements = new ArrayList<>();
-  }
+public class Patient {
+    private UUID id;
+    private String alternativeId;
+    private String name;
+    private GenderType gender;
+    private LocalDateTime birthday;
+    private List<UUID> episodesOfCareElements;
 
-  @XmlElement(name = "Id")
-  public String getId()
-  {
-    return id;
-  }
+    public Patient() {
+        id = UUID.randomUUID();
+        episodesOfCareElements = new ArrayList<>();
+    }
 
-  public void setId(String id)
-  {
-    this.id = id;
-  }
+    @XmlElement(name = "Id")
+    public UUID getId() {
+        return id;
+    }
 
-  @XmlElement(name = "AlternativeId")
-  public String getAlternativeId()
-  {
-    return alternativeId;
-  }
+    public void setId(String id) {
+        this.id = UUID.fromString(id);
+    }
 
-  public void setAlternativeId(String alternativeId)
-  {
-    this.alternativeId = alternativeId;
-  }
+    @XmlElement(name = "AlternativeId")
+    public String getAlternativeId() {
+        return alternativeId;
+    }
 
-  @XmlElement(name = "Name")
-  public String getName()
-  {
-    return name;
-  }
+    public void setAlternativeId(String alternativeId) {
+        this.alternativeId = alternativeId;
+    }
 
-  public void setName(String name)
-  {
-    this.name = name;
-  }
+    @XmlElement(name = "Name")
+    public String getName() {
+        return name;
+    }
 
-  @XmlElement(name = "EpisodeOfCareElements")
-  public List<EpisodeOfCareElement> getEpisodeOfCareElements()
-  {
-    return episodeOfCareElements;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void addEpisodeOfCareElement(EpisodeOfCareElement episodeOfCareElement)
-  {
-    this.episodeOfCareElements.add(episodeOfCareElement);
-  }
+    @XmlElement(name = "Gender")
+    public GenderType getGender() {
+        return gender;
+    }
 
-  @Override public boolean equals(Object o)
-  {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    public void setGender(GenderType gender) {
+        this.gender = gender;
+    }
 
-    Patient patient = (Patient) o;
+    @XmlElement(name = "Birthdate")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    public LocalDateTime getBirthday() {
+        return birthday;
+    }
 
-    return id.equals(patient.id);
-  }
+    public void setBirthday(LocalDateTime birthday) {
+        this.birthday = birthday;
+    }
 
-  @Override public int hashCode()
-  {
-    return id.hashCode();
-  }
+    public void addEpisodeOfCareElement(UUID id) {
+        episodesOfCareElements.add(id);
+    }
+
+    @XmlElement(name = "EpisodesOfCareElements")
+    public List<UUID> getEpisodesOfCareElements() {
+        return episodesOfCareElements;
+    }
 }

@@ -1,36 +1,37 @@
 package info.mhylle.playground.lpr3.services;
 
 import info.mhylle.playground.lpr3.data.Repository;
-import info.mhylle.playground.lpr3.model.Contact;
+import info.mhylle.playground.lpr3.model.Encounter;
+
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/contacts")
+@Path("/encounters")
 public class ContactRoutes
 {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<Contact> contacts()
+  public List<Encounter> encounters()
   {
-    return Repository.getInstance().getContacts();
+    return Repository.getInstance().getEncounters();
   }
 
   @GET
   @Path("{uid}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Contact contacts(@PathParam("uid") String uid)
+  public Encounter contacts(@PathParam("uid") String uid)
   {
-    return Repository.getInstance().getContacts().stream()
+    return Repository.getInstance().getEncounters().stream()
       .filter(c -> c.getId().equals(uid))
       .findFirst().orElse(null);
   }
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
-  public void contacts(Contact contact)
+  public void contacts(Encounter encounter)
   {
-    Repository.getInstance().addContact(contact);
+    Repository.getInstance().addEncounter(encounter);
   }
 }
