@@ -24,9 +24,16 @@ public class PatientRoutes
   @Produces(MediaType.APPLICATION_JSON)
   public Patient patients(@PathParam("id") String id)
   {
-    return Repository.getInstance().getPatients().stream()
-      .filter(patient -> patient.getId().equals(id))
-      .findFirst().orElse(null);
+    System.out.println("get patient for id: " + id);
+    Patient result = Repository.getInstance().getPatients().stream()
+            .filter(patient -> patient.getId().toString().equals(id))
+            .findFirst().orElse(null);
+    if (result != null) {
+      System.out.println("result = " + result.getName());
+    } else {
+      System.out.println("No result");
+    }
+    return result;
   }
 
   @POST
