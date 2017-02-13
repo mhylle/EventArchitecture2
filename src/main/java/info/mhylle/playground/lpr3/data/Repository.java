@@ -6,6 +6,7 @@ import info.mhylle.playground.lpr3.model.Encounter;
 import info.mhylle.playground.lpr3.model.EpisodeOfCareElement;
 import info.mhylle.playground.lpr3.model.Patient;
 import info.mhylle.playground.lpr3.model.Referral;
+import info.mhylle.playground.lpr3.rules.RuleEngine;
 
 import java.io.File;
 import java.io.FileReader;
@@ -205,8 +206,16 @@ public class Repository
 
   public void updateReferral(Referral referral)
   {
+    RuleEngine.getInstance().run(referral);
     int i = referrals.indexOf(referral);
     referrals.set(i, referral);
     saveReferrals();
+  }
+
+  public void updateEpisodeOfCareElement(EpisodeOfCareElement eoce)
+  {
+    int i = episodeOfCareElements.indexOf(eoce);
+    episodeOfCareElements.set(i, eoce);
+    saveEpisodeOfCareElements();
   }
 }

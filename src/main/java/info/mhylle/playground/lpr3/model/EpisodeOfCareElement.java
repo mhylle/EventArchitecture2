@@ -8,12 +8,12 @@ import java.util.UUID;
 
 public class EpisodeOfCareElement
 {
-
   private UUID id;
   private StatusCode status;
   private SorCode responsibleUnit;
   private UUID patient;
   private Period period;
+  private UUID referral;
 
   public EpisodeOfCareElement()
   {
@@ -73,5 +73,16 @@ public class EpisodeOfCareElement
   public void setPeriod(Period period)
   {
     this.period = period;
+  }
+
+  @XmlElement(name = "Referral")
+  public UUID getReferral()
+  {
+    return referral;
+  }
+
+  public void setReferral(UUID referral)
+  {
+    this.referral = referral;
   }
 }

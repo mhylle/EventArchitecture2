@@ -198,6 +198,7 @@ public class DataGenerator
   {
     loadPatients();
     loadEncounters();
+    loadReferrals();
 
     Random random = new Random();
     for (int i = 0; i < NR_OF_ENCOUNTERS; i++) {

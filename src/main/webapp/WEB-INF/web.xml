@@ -7,6 +7,10 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>info.mhylle.playground.lpr3</param-value>
         </init-param>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>info.mhylle.playground.lpr3.Lpr3Application</param-value>
+        </init-param>
         <!-- the following is only needed if you want to use the built-in support
       for mapping pojo objects to json. -->
         <init-param>
