@@ -97,6 +97,10 @@ public class Repository {
         File saveFile = new File(PATIENTS_SAVEFILE);
         saveData(patients, saveFile);
     }
+    private void saveReferrals() {
+        File saveFile = new File(REFERRALS_SAVEFILE);
+        saveData(referrals, saveFile);
+    }
 
     private void saveEpisodeOfCareElements() {
         File saveFile = new File(EPISODEOFCAREELEMENTS_SAVEFILE);
@@ -166,5 +170,12 @@ public class Repository {
         int i = patients.indexOf(p);
         patients.set(i, p);
         savePatients();
+    }
+
+    public void updateReferral(Referral referral)
+    {
+        int i = referrals.indexOf(referral);
+        referrals.set(i,referral);
+        saveReferrals();
     }
 }
