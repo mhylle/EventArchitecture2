@@ -24,14 +24,14 @@ public class DataGenerator
   private static final int NR_OF_EPISODES_OF_CARE = 4;
   private static final int NR_OF_REFERRALS = 6;
   private static final int NR_OF_ENCOUNTERS = 8;
-  private List<String> firstnames = new ArrayList<>();
-  private List<String> lastnames = new ArrayList<>();
-  private List<SksCode> labels = new ArrayList<>();
-  private List<SorCode> responsibleUnits = new ArrayList<>();
   private static final String ENCOUNTERS_SAVEFILE = "c:/temp/EventArchitecture/encounters.json";
   private static final String EPISODEOFCAREELEMENTS_SAVEFILE = "c:/temp/EventArchitecture/episodeOfCareElements.json";
   private static final String PATIENTS_SAVEFILE = "c:/temp/EventArchitecture/patients.json";
   private static final String REFERRALS_SAVEFILE = "c:/temp/EventArchitecture/referrals.json";
+  private List<String> firstnames = new ArrayList<>();
+  private List<String> lastnames = new ArrayList<>();
+  private List<SksCode> labels = new ArrayList<>();
+  private List<SorCode> responsibleUnits = new ArrayList<>();
   private List<Patient> patients;
   private List<Encounter> encounters;
   private List<Referral> referrals;

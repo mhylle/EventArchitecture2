@@ -14,7 +14,6 @@ public enum ReferralSksCode
   ALDA50("Udlandet"),
   ALDA90("Anden (UNS)");
 
-
   private String code;
 
   ReferralSksCode(String code)

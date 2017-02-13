@@ -37,7 +37,6 @@ public class EpisodeOfCareElement implements DataElement
     episodeOfCareMarkers = new ArrayList<>();
   }
 
-
   public EpisodeOfCareElement getPrevious()
   {
     return previous;

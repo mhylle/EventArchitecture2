@@ -1,14 +1,5 @@
 package info.mhylle.playground.lpr3.services;
 
-import info.mhylle.playground.lpr3.data.Repository;
-import info.mhylle.playground.lpr3.model.old.Diagnose;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
-
 //@Path("/diagnoses")
 public class DiagnosisRoutes
 {

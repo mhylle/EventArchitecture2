@@ -5,12 +5,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-
 public class MainClass
 {
   public void start()
   {
-
 
     JFrame frame = new JFrame();
     JPanel menuBar = new JPanel();
@@ -28,7 +26,7 @@ public class MainClass
     frame.add(contentPanel, BorderLayout.CENTER);
     frame.add(buttonPanel, BorderLayout.SOUTH);
 
-    frame.setSize(800,600);
+    frame.setSize(800, 600);
     frame.addWindowListener(new WindowAdapter()
     {
       @Override public void windowClosing(WindowEvent e)

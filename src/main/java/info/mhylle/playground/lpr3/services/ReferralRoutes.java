@@ -38,15 +38,16 @@ public class ReferralRoutes
   @GET
   @Path("{id}/receive")
   @Produces(MediaType.APPLICATION_JSON)
-  public Referral receive(@PathParam("id") String id) {
+  public Referral receive(@PathParam("id") String id)
+  {
     Referral referral = Repository.getInstance().getReferrals().stream()
-            .filter(r -> r.getId().toString().equals(id))
-            .findFirst().orElse(null);
+      .filter(r -> r.getId().toString().equals(id))
+      .findFirst().orElse(null);
     if (referral != null) {
       referral.setStatus(StatusCode.ACCEPTED);
       Repository.getInstance().updateReferral(referral);
     } else {
-      System.out.println("referral = " + id + "not found." );
+      System.out.println("referral = " + id + "not found.");
     }
 
     return referral;

@@ -140,7 +140,7 @@ public class Procedure implements DataElement
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    Procedure procedure= (Procedure) o;
+    Procedure procedure = (Procedure) o;
 
     return id.equals(procedure.id);
   }

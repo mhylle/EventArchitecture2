@@ -1,9 +1,9 @@
 package info.mhylle.playground.lpr3.model.old;
 
 import info.mhylle.playground.lpr3.adaptors.LocalDateTimeAdapter;
-import info.mhylle.playground.lpr3.model.SKS.encounter.Type;
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
+import info.mhylle.playground.lpr3.model.SKS.encounter.Type;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -38,7 +38,6 @@ public class Contact implements DataElement
     residencyList = new ArrayList<>();
     paymentInformation = new ArrayList<>();
     procedures = new ArrayList<>();
-
   }
 
   @XmlElement(name = "Id")

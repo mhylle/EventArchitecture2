@@ -73,7 +73,7 @@ public class ResultReport implements DataElement
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ResultReport resultReport= (ResultReport) o;
+    ResultReport resultReport = (ResultReport) o;
 
     return id.equals(resultReport.id);
   }

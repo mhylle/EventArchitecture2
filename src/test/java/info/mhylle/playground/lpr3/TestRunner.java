@@ -14,7 +14,7 @@ public class TestRunner
   {
     Result result = JUnitCore.runClasses(RepositoryTest.class, DataGenerator.class);
 
-    for (Failure failure: result.getFailures()) {
+    for (Failure failure : result.getFailures()) {
       System.out.println(failure.toString());
     }
 

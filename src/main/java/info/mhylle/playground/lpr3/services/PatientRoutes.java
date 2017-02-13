@@ -24,9 +24,9 @@ public class PatientRoutes
   @Produces(MediaType.APPLICATION_JSON)
   public Patient patients(@PathParam("id") String id)
   {
-    return  Repository.getInstance().getPatients().stream()
-            .filter(patient -> patient.getId().toString().equals(id))
-            .findFirst().orElse(null);
+    return Repository.getInstance().getPatients().stream()
+      .filter(patient -> patient.getId().toString().equals(id))
+      .findFirst().orElse(null);
   }
 
   @POST

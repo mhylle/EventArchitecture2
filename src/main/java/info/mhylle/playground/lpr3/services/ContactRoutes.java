@@ -3,7 +3,6 @@ package info.mhylle.playground.lpr3.services;
 import info.mhylle.playground.lpr3.data.Repository;
 import info.mhylle.playground.lpr3.model.Encounter;
 
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;

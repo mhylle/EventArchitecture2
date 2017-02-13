@@ -12,7 +12,6 @@ public enum StatusCode
   ACCEPTED("Accepted"),
   REJECTED("Rejected");
 
-
   private String code;
 
   StatusCode(String code)

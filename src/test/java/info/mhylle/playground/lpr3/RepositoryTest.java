@@ -2,10 +2,10 @@ package info.mhylle.playground.lpr3;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import info.mhylle.playground.lpr3.model.old.EpisodeOfCareElement;
-import info.mhylle.playground.lpr3.model.old.Patient;
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
+import info.mhylle.playground.lpr3.model.old.EpisodeOfCareElement;
+import info.mhylle.playground.lpr3.model.old.Patient;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 /**
@@ -78,7 +77,8 @@ public class RepositoryTest
   }
 
   @Test
-  public void testLoadExistingDataFile() {
+  public void testLoadExistingDataFile()
+  {
     List<Patient> patientList = loadObjects(new File(PATIENTS_SAVEFILE), patients);
     assertNotNull(patientList);
 
@@ -88,7 +88,8 @@ public class RepositoryTest
     assertTrue(patients.size() > 0);
   }
 
-  private void loadPatients() {
+  private void loadPatients()
+  {
     Gson gson = new Gson();
     try {
       patients = gson.fromJson(new FileReader(new File(PATIENTS_SAVEFILE)), new TypeToken<List<Patient>>()
@@ -98,6 +99,7 @@ public class RepositoryTest
       e.printStackTrace();
     }
   }
+
   private <T> List<T> loadObjects(File saveFile, List data)
   {
     Gson gson = new Gson();
@@ -112,7 +114,8 @@ public class RepositoryTest
   }
 
   @Test
-  public void testUpdateDataFile() {
+  public void testUpdateDataFile()
+  {
     Gson gson = new Gson();
 
     String jSONpatients = gson.toJson(this.patients);
@@ -159,6 +162,5 @@ public class RepositoryTest
       e.printStackTrace();
     }
     assertNotNull(patients);
-
   }
 }

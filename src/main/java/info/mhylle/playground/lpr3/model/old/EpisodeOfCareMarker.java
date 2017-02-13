@@ -7,14 +7,13 @@ import java.util.UUID;
 
 public class EpisodeOfCareMarker implements DataElement
 {
+  private UUID id;
+  private SksCode code;
+  private LocalDateTime time;
   public EpisodeOfCareMarker()
   {
     id = UUID.randomUUID();
   }
-
-  private UUID id;
-  private SksCode code;
-  private LocalDateTime time;
 
   @Override public String getId()
   {

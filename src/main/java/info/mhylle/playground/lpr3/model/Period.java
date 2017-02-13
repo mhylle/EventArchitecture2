@@ -9,27 +9,32 @@ import java.time.LocalDateTime;
 /**
  * Created by mhyll on 12-02-2017.
  */
-public class Period {
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+public class Period
+{
+  private LocalDateTime startTime;
+  private LocalDateTime endTime;
 
-    @XmlElement(name = "StartTime")
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
+  @XmlElement(name = "StartTime")
+  @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+  public LocalDateTime getStartTime()
+  {
+    return startTime;
+  }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
+  public void setStartTime(LocalDateTime startTime)
+  {
+    this.startTime = startTime;
+  }
 
-    @XmlElement(name = "EndTime")
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
+  @XmlElement(name = "EndTime")
+  @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+  public LocalDateTime getEndTime()
+  {
+    return endTime;
+  }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
+  public void setEndTime(LocalDateTime endTime)
+  {
+    this.endTime = endTime;
+  }
 }
