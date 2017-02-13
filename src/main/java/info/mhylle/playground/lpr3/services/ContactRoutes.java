@@ -24,7 +24,7 @@ public class ContactRoutes
   public Encounter contacts(@PathParam("uid") String uid)
   {
     return Repository.getInstance().getEncounters().stream()
-      .filter(c -> c.getId().equals(uid))
+      .filter(c -> c.getId().toString().equals(uid))
       .findFirst().orElse(null);
   }
 
