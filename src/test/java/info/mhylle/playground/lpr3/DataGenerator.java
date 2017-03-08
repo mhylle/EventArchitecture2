@@ -2,7 +2,6 @@ package info.mhylle.playground.lpr3;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import info.mhylle.playground.lpr3.data.Repository;
 import info.mhylle.playground.lpr3.model.*;
 import info.mhylle.playground.lpr3.model.SKS.ReasonSksCode;
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
@@ -129,6 +128,7 @@ public class DataGenerator {
             EpisodeOfCareElement eoce = new EpisodeOfCareElement();
             SorCode responsibleUnit = responsibleUnits.get(random.nextInt(responsibleUnits.size()));
             eoce.setResponsibleUnit(responsibleUnit);
+
             eoce.setStatus(info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode.values()[random.nextInt(info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode.values().length)]);
             LocalDateTime startTime = createDate(random, 2017, 5);
             Period period = new Period();
@@ -291,7 +291,7 @@ public class DataGenerator {
         return dateTime;
     }
 
-    public void savePatients() {
+    private void savePatients() {
         Gson gson = new Gson();
         String jSONpatients = gson.toJson(this.patients);
 
@@ -303,7 +303,7 @@ public class DataGenerator {
         }
     }
 
-    public void saveEpisodesOfCareElements() {
+    private void saveEpisodesOfCareElements() {
         Gson gson = new Gson();
         String jSONEpisodesOfCareElements = gson.toJson(this.episodeOfCareElements);
 
@@ -315,7 +315,7 @@ public class DataGenerator {
         }
     }
 
-    public void saveReferrals() {
+    private void saveReferrals() {
         Gson gson = new Gson();
         String jSONReferrals = gson.toJson(this.referrals);
 
@@ -327,7 +327,7 @@ public class DataGenerator {
         }
     }
 
-    public void saveEncounters() {
+    private void saveEncounters() {
         Gson gson = new Gson();
         String jSONEncounters = gson.toJson(this.encounters);
 
