@@ -12,194 +12,164 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Contact implements DataElement
-{
-  private UUID id;
-  private SorCode responsibleUnit;
-  private Type type;
-  private SksCode priority;
-  @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-  private LocalDateTime startTime;
-  @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-  private LocalDateTime endTime;
-  @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-  private LocalDateTime treatmentStart;
+public class Contact implements DataElement {
+    private UUID id;
+    private SorCode responsibleUnit;
+    private Type type;
+    private SksCode priority;
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    private LocalDateTime startTime;
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    private LocalDateTime endTime;
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    private LocalDateTime treatmentStart;
 
-  private Referral referral;
-  private List<Residency> residencyList;
-  private Diagnose actionDiagnose;
-  private Diagnose biDiagnose;
-  private List<PaymentInformation> paymentInformation;
-  private List<Procedure> procedures;
+    private Referral referral;
+    private List<Residency> residencyList;
+    private Diagnose actionDiagnose;
+    private Diagnose biDiagnose;
+    private List<PaymentInformation> paymentInformation;
+    private List<Procedure> procedures;
 
-  public Contact()
-  {
-    id = UUID.randomUUID();
-    residencyList = new ArrayList<>();
-    paymentInformation = new ArrayList<>();
-    procedures = new ArrayList<>();
-  }
+    public Contact() {
+        id = UUID.randomUUID();
+        residencyList = new ArrayList<>();
+        paymentInformation = new ArrayList<>();
+        procedures = new ArrayList<>();
+    }
 
-  @XmlElement(name = "Id")
-  public String getId()
-  {
-    return id.toString();
-  }
+    @XmlElement(name = "Id")
+    public String getId() {
+        return id.toString();
+    }
 
-  public SorCode getResponsibleUnit()
-  {
-    return responsibleUnit;
-  }
+    public SorCode getResponsibleUnit() {
+        return responsibleUnit;
+    }
 
-  public void setResponsibleUnit(SorCode responsibleUnit)
-  {
-    this.responsibleUnit = responsibleUnit;
-  }
+    public void setResponsibleUnit(SorCode responsibleUnit) {
+        this.responsibleUnit = responsibleUnit;
+    }
 
-  public Type getType()
-  {
-    return type;
-  }
+    public Type getType() {
+        return type;
+    }
 
-  public void setType(Type type)
-  {
-    this.type = type;
-  }
+    public void setType(Type type) {
+        this.type = type;
+    }
 
-  public SksCode getPriority()
-  {
-    return priority;
-  }
+    public SksCode getPriority() {
+        return priority;
+    }
 
-  public void setPriority(SksCode priority)
-  {
-    this.priority = priority;
-  }
+    public void setPriority(SksCode priority) {
+        this.priority = priority;
+    }
 
-  public LocalDateTime getStartTime()
-  {
-    return startTime;
-  }
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
 
-  public void setStartTime(LocalDateTime startTime)
-  {
-    this.startTime = startTime;
-  }
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
 
-  public LocalDateTime getEndTime()
-  {
-    return endTime;
-  }
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
 
-  public void setEndTime(LocalDateTime endTime)
-  {
-    this.endTime = endTime;
-  }
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 
-  public LocalDateTime getTreatmentStart()
-  {
-    return treatmentStart;
-  }
+    public LocalDateTime getTreatmentStart() {
+        return treatmentStart;
+    }
 
-  public void setTreatmentStart(LocalDateTime treatmentStart)
-  {
-    this.treatmentStart = treatmentStart;
-  }
+    public void setTreatmentStart(LocalDateTime treatmentStart) {
+        this.treatmentStart = treatmentStart;
+    }
 
-  public Referral getReferral()
-  {
-    return referral;
-  }
+    public Referral getReferral() {
+        return referral;
+    }
 
-  public void setReferral(Referral referral)
-  {
-    this.referral = referral;
-  }
+    public void setReferral(Referral referral) {
+        this.referral = referral;
+    }
 
-  public List<Residency> getResidencyList()
-  {
-    return residencyList;
-  }
+    public List<Residency> getResidencyList() {
+        return residencyList;
+    }
 
-  public void addResidency(Residency residency)
-  {
-    this.residencyList.add(residency);
-  }
+    public void addResidency(Residency residency) {
+        this.residencyList.add(residency);
+    }
 
-  public void removeResidency(Residency residency)
-  {
-    this.residencyList.remove(residency);
-  }
+    public void removeResidency(Residency residency) {
+        this.residencyList.remove(residency);
+    }
 
-  public Diagnose getActionDiagnose()
-  {
-    return actionDiagnose;
-  }
+    public Diagnose getActionDiagnose() {
+        return actionDiagnose;
+    }
 
-  public void setActionDiagnose(Diagnose actionDiagnose)
-  {
-    this.actionDiagnose = actionDiagnose;
-  }
+    public void setActionDiagnose(Diagnose actionDiagnose) {
+        this.actionDiagnose = actionDiagnose;
+    }
 
-  public Diagnose getBiDiagnose()
-  {
-    return biDiagnose;
-  }
+    public Diagnose getBiDiagnose() {
+        return biDiagnose;
+    }
 
-  public void setBiDiagnose(Diagnose biDiagnose)
-  {
-    this.biDiagnose = biDiagnose;
-  }
+    public void setBiDiagnose(Diagnose biDiagnose) {
+        this.biDiagnose = biDiagnose;
+    }
 
-  public List<PaymentInformation> getPaymentInformation()
-  {
-    return paymentInformation;
-  }
+    public List<PaymentInformation> getPaymentInformation() {
+        return paymentInformation;
+    }
 
-  public void addPaymentInformation(PaymentInformation paymentInformation)
-  {
-    this.paymentInformation.add(paymentInformation);
-  }
+    public void addPaymentInformation(PaymentInformation paymentInformation) {
+        this.paymentInformation.add(paymentInformation);
+    }
 
-  public void removePaymentInformation(PaymentInformation paymentInformation)
-  {
-    this.paymentInformation.remove(paymentInformation);
-  }
+    public void removePaymentInformation(PaymentInformation paymentInformation) {
+        this.paymentInformation.remove(paymentInformation);
+    }
 
-  public List<Procedure> getProcedures()
-  {
-    return procedures;
-  }
+    public List<Procedure> getProcedures() {
+        return procedures;
+    }
 
-  public void addProcedure(Procedure procedure)
-  {
-    this.procedures.add(procedure);
-  }
+    public void addProcedure(Procedure procedure) {
+        this.procedures.add(procedure);
+    }
 
-  public void removeProcedure(Procedure procedure)
-  {
-    this.procedures.remove(procedure);
-  }
+    public void removeProcedure(Procedure procedure) {
+        this.procedures.remove(procedure);
+    }
 
-  @Override public String toString()
-  {
-    return "Contact{" +
-      "id=" + id +
-      '}';
-  }
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                '}';
+    }
 
-  @Override public boolean equals(Object o)
-  {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    Contact contact = (Contact) o;
+        Contact contact = (Contact) o;
 
-    return id.equals(contact.id);
-  }
+        return id.equals(contact.id);
+    }
 
-  @Override public int hashCode()
-  {
-    return id.hashCode();
-  }
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

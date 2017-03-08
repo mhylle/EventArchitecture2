@@ -5,53 +5,48 @@ import info.mhylle.playground.lpr3.model.SKS.SksCode;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class EpisodeOfCareMarker implements DataElement
-{
-  private UUID id;
-  private SksCode code;
-  private LocalDateTime time;
-  public EpisodeOfCareMarker()
-  {
-    id = UUID.randomUUID();
-  }
+public class EpisodeOfCareMarker implements DataElement {
+    private UUID id;
+    private SksCode code;
+    private LocalDateTime time;
 
-  @Override public String getId()
-  {
-    return id.toString();
-  }
+    public EpisodeOfCareMarker() {
+        id = UUID.randomUUID();
+    }
 
-  public SksCode getCode()
-  {
-    return code;
-  }
+    @Override
+    public String getId() {
+        return id.toString();
+    }
 
-  public void setCode(SksCode code)
-  {
-    this.code = code;
-  }
+    public SksCode getCode() {
+        return code;
+    }
 
-  public LocalDateTime getTime()
-  {
-    return time;
-  }
+    public void setCode(SksCode code) {
+        this.code = code;
+    }
 
-  public void setTime(LocalDateTime time)
-  {
-    this.time = time;
-  }
+    public LocalDateTime getTime() {
+        return time;
+    }
 
-  @Override public boolean equals(Object o)
-  {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 
-    EpisodeOfCareMarker episodeOfCareMarker = (EpisodeOfCareMarker) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    return id.equals(episodeOfCareMarker.id);
-  }
+        EpisodeOfCareMarker episodeOfCareMarker = (EpisodeOfCareMarker) o;
 
-  @Override public int hashCode()
-  {
-    return id.hashCode();
-  }
+        return id.equals(episodeOfCareMarker.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
