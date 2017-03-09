@@ -3,13 +3,14 @@ package info.mhylle.playground.lpr3.rules;
 /**
  * Created by mnh on 13-02-2017.
  */
-public interface Rule {
-    boolean handle();
+public interface Rule
+{
+  boolean handle();
 
-    boolean process();
+  boolean process();
 
-    boolean handle(Object o);
+  boolean handle(Object o);
 
-    boolean process(Object o);
+  boolean process(Object o);
 
 }

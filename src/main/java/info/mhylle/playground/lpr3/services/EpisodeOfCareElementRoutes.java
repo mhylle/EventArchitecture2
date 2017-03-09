@@ -8,27 +8,31 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/episodeofcareelements")
-public class EpisodeOfCareElementRoutes {
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<EpisodeOfCareElement> episodeOfCareElement() {
-        return Repository.getInstance().getEpisodeOfCareElements();
-    }
+public class EpisodeOfCareElementRoutes
+{
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<EpisodeOfCareElement> episodeOfCareElement()
+  {
+    return Repository.getInstance().getEpisodeOfCareElements();
+  }
 
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public EpisodeOfCareElement episodeOfCareElement(@PathParam("id") String id) {
-        return Repository.getInstance().getEpisodeOfCareElements().stream()
-                .filter(episodeOfCareElement -> episodeOfCareElement.getId().toString().equals(id))
-                .findFirst().orElse(null);
-    }
+  @GET
+  @Path("{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public EpisodeOfCareElement episodeOfCareElement(@PathParam("id") String id)
+  {
+    return Repository.getInstance().getEpisodeOfCareElements().stream()
+        .filter(episodeOfCareElement -> episodeOfCareElement.getId().toString().equals(id))
+        .findFirst().orElse(null);
+  }
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String episodeOfCareElement(EpisodeOfCareElement episodeOfCareElement) {
-        Repository.getInstance().addEpisodeOfCareElement(episodeOfCareElement);
-        return episodeOfCareElement.getId().toString();
-    }
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public String episodeOfCareElement(EpisodeOfCareElement episodeOfCareElement)
+  {
+    Repository.getInstance().addEpisodeOfCareElement(episodeOfCareElement);
+    return episodeOfCareElement.getId().toString();
+  }
 }

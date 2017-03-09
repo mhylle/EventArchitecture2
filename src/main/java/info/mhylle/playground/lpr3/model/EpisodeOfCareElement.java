@@ -1,84 +1,107 @@
 package info.mhylle.playground.lpr3.model;
 
+import info.mhylle.playground.lpr3.adaptors.PatientIdAdapter;
+import info.mhylle.playground.lpr3.adaptors.ReferralIdAdapter;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
 import info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.UUID;
 
-public class EpisodeOfCareElement {
-    private UUID id;
-    private StatusCode status;
-    private SorCode responsibleUnit;
-    private UUID patient;
-    private Period period;
-    private UUID referral;
-    private UUID condition;
+public class EpisodeOfCareElement
+{
+  private UUID id;
+  private Referral referral;
+  private Condition condition;
+  private Patient patient;
+  private SorCode responsibleUnit;
+  private StatusCode status;
+  private Period period;
 
-    public EpisodeOfCareElement() {
-        id = UUID.randomUUID();
-    }
 
-    @XmlElement(name = "Id")
-    public UUID getId() {
-        return id;
-    }
+  public EpisodeOfCareElement()
+  {
+    id = UUID.randomUUID();
+  }
 
-    public void setId(String id) {
-        this.id = UUID.fromString(id);
-    }
+  @XmlElement(name = "Id")
+  public UUID getId()
+  {
+    return id;
+  }
 
-    @XmlElement(name = "Status")
-    public StatusCode getStatus() {
-        return status;
-    }
+  public void setId(String id)
+  {
+    this.id = UUID.fromString(id);
+  }
 
-    public void setStatus(StatusCode status) {
-        this.status = status;
-    }
+  @XmlElement(name = "Status")
+  public StatusCode getStatus()
+  {
+    return status;
+  }
 
-    @XmlElement(name = "ResponsibleUnit")
-    public SorCode getResponsibleUnit() {
-        return responsibleUnit;
-    }
+  public void setStatus(StatusCode status)
+  {
+    this.status = status;
+  }
 
-    public void setResponsibleUnit(SorCode responsibleUnit) {
-        this.responsibleUnit = responsibleUnit;
-    }
+  @XmlElement(name = "ResponsibleUnit")
+  public SorCode getResponsibleUnit()
+  {
+    return responsibleUnit;
+  }
 
-    @XmlElement(name = "Patient")
-    public UUID getPatient() {
-        return patient;
-    }
+  public void setResponsibleUnit(SorCode responsibleUnit)
+  {
+    this.responsibleUnit = responsibleUnit;
+  }
 
-    public void setPatient(UUID patient) {
-        this.patient = patient;
-    }
+  @XmlElement(name = "Patient")
+  @XmlJavaTypeAdapter(PatientIdAdapter.class)
+  public Patient getPatient()
+  {
+    return patient;
+  }
 
-    @XmlElement(name = "Period")
-    public Period getPeriod() {
-        return period;
-    }
+  public void setPatient(Patient patient)
+  {
+    this.patient = patient;
+  }
 
-    public void setPeriod(Period period) {
-        this.period = period;
-    }
+  @XmlElement(name = "Period")
+  public Period getPeriod()
+  {
+    return period;
+  }
 
-    @XmlElement(name = "Referral")
-    public UUID getReferral() {
-        return referral;
-    }
+  public void setPeriod(Period period)
+  {
+    this.period = period;
+  }
 
-    public void setReferral(UUID referral) {
-        this.referral = referral;
-    }
+  @XmlElement(name = "Referral")
+  @XmlJavaTypeAdapter(ReferralIdAdapter.class)
+  public Referral getReferral()
+  {
+    return referral;
+  }
 
-    @XmlElement(name = "Condition")
-    public UUID getCondition() {
-        return condition;
-    }
+  public void setReferral(Referral referral)
+  {
+    this.referral = referral;
+  }
 
-    public void setCondition(UUID condition) {
-        this.condition = condition;
-    }
+  @XmlElement(name = "Condition")
+  @XmlJavaTypeAdapter(PatientIdAdapter.class)
+  public Condition getCondition()
+  {
+    return condition;
+  }
+
+  public void setCondition(Condition condition)
+  {
+    this.condition = condition;
+  }
 }

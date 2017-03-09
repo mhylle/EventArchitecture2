@@ -1,7 +1,8 @@
 package info.mhylle.playground.lpr3.services;
 
 //@Path("/diagnoses")
-public class DiagnosisRoutes {
+public class DiagnosisRoutes
+{
 //  @GET
 //  @Produces(MediaType.APPLICATION_JSON)
 //  public Response diagnosis()
