@@ -117,6 +117,8 @@ public class DataGenerator
       LocalDateTime birthday = createDate(random, 2017, 85);
       p.setBirthday(birthday);
       patients.add(p);
+
+//      savePatients();
     }
 
     savePatients();
