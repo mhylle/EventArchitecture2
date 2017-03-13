@@ -14,6 +14,7 @@ public class EpisodeOfCareElementRoutes
   @Produces(MediaType.APPLICATION_JSON)
   public List<EpisodeOfCareElement> episodeOfCareElement()
   {
+    System.out.println("Getting episodes of care");
     return Repository.getInstance().getEpisodeOfCareElements();
   }
 

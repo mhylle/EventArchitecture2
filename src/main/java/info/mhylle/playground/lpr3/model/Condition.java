@@ -3,6 +3,7 @@ package info.mhylle.playground.lpr3.model;
 import info.mhylle.playground.lpr3.adaptors.EncounterIdAdapter;
 import info.mhylle.playground.lpr3.adaptors.PatientIdAdapter;
 import info.mhylle.playground.lpr3.model.SKS.condition.CategoryCode;
+import info.mhylle.playground.lpr3.model.SKS.condition.VerificationStatusCode;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,6 +19,7 @@ public class Condition
   private Period period;
   private CategoryCode category;
   private Integer code;
+  private VerificationStatusCode verificationStatus;
 
   public Condition()
   {
@@ -90,5 +92,14 @@ public class Condition
   public void setCode(Integer code)
   {
     this.code = code;
+  }
+
+  @XmlElement(name = "VerificationStatus")
+  public VerificationStatusCode getVerificationStatus() {
+    return verificationStatus;
+  }
+
+  public void setVerificationStatus(VerificationStatusCode verificationStatus) {
+    this.verificationStatus = verificationStatus;
   }
 }

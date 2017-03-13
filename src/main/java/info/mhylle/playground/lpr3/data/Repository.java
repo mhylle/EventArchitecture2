@@ -34,8 +34,10 @@ public class Repository
   public static Repository getInstance()
   {
     if (_instance == null) {
+      System.out.println("new repository");
       _instance = new Repository();
     }
+    System.out.println("returning instance");
     return _instance;
   }
 
@@ -217,6 +219,7 @@ public class Repository
 
   public List<EpisodeOfCareElement> getEpisodeOfCareElements()
   {
+    System.out.println("returning episodes of care elements, I have " + episodeOfCareElements.size() + " elements");
     return episodeOfCareElements;
   }
 

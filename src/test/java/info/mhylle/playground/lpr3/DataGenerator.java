@@ -6,6 +6,7 @@ import info.mhylle.playground.lpr3.model.*;
 import info.mhylle.playground.lpr3.model.SKS.ReasonSksCode;
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
+import info.mhylle.playground.lpr3.model.SKS.condition.VerificationStatusCode;
 import info.mhylle.playground.lpr3.model.SKS.encounter.EncounterClass;
 import info.mhylle.playground.lpr3.model.SKS.patient.GenderType;
 import info.mhylle.playground.lpr3.model.SKS.referral.StatusCode;
@@ -18,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DataGenerator
-{
+public class DataGenerator {
   private static final int NR_OF_PATIENTS = 30;
   private static final int NR_OF_EPISODES_OF_CARE = 4;
   private static final int NR_OF_REFERRALS = 6;
@@ -38,8 +38,7 @@ public class DataGenerator
   private List<EpisodeOfCareElement> episodeOfCareElements;
 
   @Before
-  public void populateLists()
-  {
+  public void populateLists() {
     firstnames.add("Anders");
     firstnames.add("Bent");
     firstnames.add("Casper");
@@ -79,8 +78,7 @@ public class DataGenerator
   }
 
   @Test
-  public void generatePatients()
-  {
+  public void generatePatients() {
     loadPatients();
     Random random = new Random();
     for (int i = 0; i < NR_OF_PATIENTS; i++) {
@@ -125,8 +123,7 @@ public class DataGenerator
   }
 
   @Test
-  public void generateEpisodesOfCare()
-  {
+  public void generateEpisodesOfCare() {
     loadPatients();
     loadEpisodesOfCare();
     Random random = new Random();
@@ -136,6 +133,11 @@ public class DataGenerator
       eoce.setResponsibleUnit(responsibleUnit);
 
       eoce.setStatus(info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode.values()[random.nextInt(info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode.values().length)]);
+      if (patients != null && patients.size() > 0) {
+        Patient patient = patients.get(random.nextInt(patients.size()));
+        eoce.setPatient(patient);
+      }
+
       LocalDateTime startTime = createDate(random, 2017, 5);
       Period period = new Period();
       period.setStartTime(startTime);
@@ -150,14 +152,16 @@ public class DataGenerator
         default:
           break;
       }
-
       eoce.setPeriod(period);
-      if (patients != null && patients.size() > 0) {
-        if (random.nextDouble() < 0.75) {
-          Patient patient = patients.get(random.nextInt(patients.size()));
-          eoce.setPatient(patient);
-        }
-      }
+
+      Condition condition = new Condition();
+      condition.setVerificationStatus(VerificationStatusCode.values()[random.nextInt(VerificationStatusCode.values().length)]);
+      condition.setPatient(eoce.getPatient());
+      Period conditionPeriod = new Period(startTime);
+      condition.setPeriod(conditionPeriod);
+
+      eoce.setCondition(condition);
+
       episodeOfCareElements.add(eoce);
     }
 
@@ -165,8 +169,7 @@ public class DataGenerator
   }
 
   @Test
-  public void generateReferrals()
-  {
+  public void generateReferrals() {
     loadPatients();
     loadReferrals();
     Random random = new Random();
@@ -197,8 +200,7 @@ public class DataGenerator
   }
 
   @Test
-  public void generateStandardReferrals()
-  {
+  public void generateStandardReferrals() {
     loadPatients();
     loadReferrals();
     Patient patient = patients.get(new Random().nextInt(patients.size()));
@@ -236,8 +238,7 @@ public class DataGenerator
   }
 
   @Test
-  public void generateEncounters()
-  {
+  public void generateEncounters() {
     loadPatients();
     loadEncounters();
     loadReferrals();
@@ -275,8 +276,7 @@ public class DataGenerator
     saveEncounters();
   }
 
-  private void flipTime(Period period)
-  {
+  private void flipTime(Period period) {
     LocalDateTime startTime = period.getStartTime();
     LocalDateTime endTime = period.getEndTime();
     if (startTime.isBefore(endTime)) {
@@ -288,8 +288,7 @@ public class DataGenerator
     }
   }
 
-  private LocalDateTime createDate(Random random, int beforeYear, int range)
-  {
+  private LocalDateTime createDate(Random random, int beforeYear, int range) {
     int yearOffSet = random.nextInt(range);
 
     int year = beforeYear - yearOffSet;
@@ -302,8 +301,7 @@ public class DataGenerator
     return dateTime;
   }
 
-  private void savePatients()
-  {
+  private void savePatients() {
     Gson gson = new Gson();
     String jSONpatients = gson.toJson(this.patients);
 
@@ -315,8 +313,7 @@ public class DataGenerator
     }
   }
 
-  private void saveEpisodesOfCareElements()
-  {
+  private void saveEpisodesOfCareElements() {
     Gson gson = new Gson();
     String jSONEpisodesOfCareElements = gson.toJson(this.episodeOfCareElements);
 
@@ -328,8 +325,7 @@ public class DataGenerator
     }
   }
 
-  private void saveReferrals()
-  {
+  private void saveReferrals() {
     Gson gson = new Gson();
     String jSONReferrals = gson.toJson(this.referrals);
 
@@ -341,8 +337,7 @@ public class DataGenerator
     }
   }
 
-  private void saveEncounters()
-  {
+  private void saveEncounters() {
     Gson gson = new Gson();
     String jSONEncounters = gson.toJson(this.encounters);
 
@@ -354,12 +349,10 @@ public class DataGenerator
     }
   }
 
-  private void loadPatients()
-  {
+  private void loadPatients() {
     Gson gson = new Gson();
     try {
-      patients = gson.fromJson(new FileReader(new File(PATIENTS_SAVEFILE)), new TypeToken<List<Patient>>()
-      {
+      patients = gson.fromJson(new FileReader(new File(PATIENTS_SAVEFILE)), new TypeToken<List<Patient>>() {
       }.getType());
     } catch (FileNotFoundException e) {
       e.printStackTrace();
@@ -369,12 +362,10 @@ public class DataGenerator
     }
   }
 
-  private void loadReferrals()
-  {
+  private void loadReferrals() {
     Gson gson = new Gson();
     try {
-      referrals = gson.fromJson(new FileReader(new File(REFERRALS_SAVEFILE)), new TypeToken<List<Referral>>()
-      {
+      referrals = gson.fromJson(new FileReader(new File(REFERRALS_SAVEFILE)), new TypeToken<List<Referral>>() {
       }.getType());
     } catch (FileNotFoundException e) {
       e.printStackTrace();
@@ -384,12 +375,10 @@ public class DataGenerator
     }
   }
 
-  private void loadEncounters()
-  {
+  private void loadEncounters() {
     Gson gson = new Gson();
     try {
-      encounters = gson.fromJson(new FileReader(new File(ENCOUNTERS_SAVEFILE)), new TypeToken<List<Encounter>>()
-      {
+      encounters = gson.fromJson(new FileReader(new File(ENCOUNTERS_SAVEFILE)), new TypeToken<List<Encounter>>() {
       }.getType());
     } catch (FileNotFoundException e) {
       e.printStackTrace();
@@ -399,12 +388,10 @@ public class DataGenerator
     }
   }
 
-  private void loadEpisodesOfCare()
-  {
+  private void loadEpisodesOfCare() {
     Gson gson = new Gson();
     try {
-      episodeOfCareElements = gson.fromJson(new FileReader(new File(EPISODEOFCAREELEMENTS_SAVEFILE)), new TypeToken<List<EpisodeOfCareElement>>()
-      {
+      episodeOfCareElements = gson.fromJson(new FileReader(new File(EPISODEOFCAREELEMENTS_SAVEFILE)), new TypeToken<List<EpisodeOfCareElement>>() {
       }.getType());
     } catch (FileNotFoundException e) {
       e.printStackTrace();

@@ -1,5 +1,6 @@
 package info.mhylle.playground.lpr3.model;
 
+import info.mhylle.playground.lpr3.adaptors.ConditionIdAdapter;
 import info.mhylle.playground.lpr3.adaptors.PatientIdAdapter;
 import info.mhylle.playground.lpr3.adaptors.ReferralIdAdapter;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
@@ -94,7 +95,7 @@ public class EpisodeOfCareElement
   }
 
   @XmlElement(name = "Condition")
-  @XmlJavaTypeAdapter(PatientIdAdapter.class)
+  @XmlJavaTypeAdapter(ConditionIdAdapter.class)
   public Condition getCondition()
   {
     return condition;
