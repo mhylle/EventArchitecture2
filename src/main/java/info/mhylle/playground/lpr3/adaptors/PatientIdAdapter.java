@@ -15,7 +15,6 @@ public class PatientIdAdapter extends XmlAdapter<String, Patient>
   public Patient unmarshal(String id) throws Exception
   {
     try {
-      System.out.println("unmarshal patient (" + id + ")");
       return Repository.getInstance().getPatients().stream()
           .filter(patient -> patient.getId().toString().equals(id))
           .findFirst().orElse(null);
@@ -29,7 +28,6 @@ public class PatientIdAdapter extends XmlAdapter<String, Patient>
   @Override
   public String marshal(Patient patient) throws Exception
   {
-    System.out.println("marshal patient");
     try {
       if (patient != null) {
         return patient.getId().toString();

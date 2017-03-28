@@ -34,10 +34,9 @@ public class Repository
   public static Repository getInstance()
   {
     if (_instance == null) {
-      System.out.println("new repository");
       _instance = new Repository();
     }
-    System.out.println("returning instance");
+
     return _instance;
   }
 
