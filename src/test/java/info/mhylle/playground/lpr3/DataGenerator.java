@@ -173,29 +173,85 @@ public class DataGenerator {
     loadPatients();
     loadReferrals();
     Random random = new Random();
-    for (int i = 0; i < NR_OF_REFERRALS; i++) {
-      Referral referral = new Referral();
-      if (random.nextDouble() < 0.8) {
-        referral.setStatus(StatusCode.REQUESTED);
-      } else {
-        referral.setStatus(info.mhylle.playground.lpr3.model.SKS.referral.StatusCode.values()[random.nextInt(info.mhylle.playground.lpr3.model.SKS.referral.StatusCode.values().length)]);
-      }
 
-      referral.setReason(ReasonSksCode.values()[random.nextInt(ReasonSksCode.values().length)]);
-      if (patients != null && patients.size() > 0) {
-        if (random.nextDouble() < 0.75) {
-          Patient patient = patients.get(random.nextInt(patients.size()));
-          referral.setPatient(patient);
-        }
-      }
-      if (encounters != null && encounters.size() > 0) {
-        if (random.nextDouble() < 0.75) {
-          Encounter encounter = encounters.get(random.nextInt(encounters.size()));
-          referral.setEncounter(encounter);
-        }
-      }
-      referrals.add(referral);
+    if (patients != null && patients.size() > 0) {
+      Patient patient = patients.get(random.nextInt(patients.size()));
+      LocalDateTime now = LocalDateTime.now();
+
+      Referral headCancerStart = new Referral();
+      headCancerStart.setPatient(patient);
+      headCancerStart.setStatus(StatusCode.REQUESTED);
+      headCancerStart.setReason(ReasonSksCode.HEAD_AND_CANCER_PACKAGE_START);
+      LocalDateTime headCancerStartTime = now.minusDays(30);
+      headCancerStart.setAuthoredOn(headCancerStartTime);
+
+      referrals.add(headCancerStart);
+
+      Referral headCancerElucidation = new Referral();
+      headCancerElucidation.setPatient(patient);
+      headCancerElucidation.setStatus(StatusCode.REQUESTED);
+      headCancerElucidation.setReason(ReasonSksCode.HEAD_AND_CANCER_ELUCIDATION);
+      LocalDateTime headCancerElucidationTime = now.minusDays(25);
+      headCancerElucidation.setAuthoredOn(headCancerElucidationTime);
+
+      referrals.add(headCancerElucidation);
+
+      Referral headCancerDecision = new Referral();
+      headCancerDecision.setPatient(patient);
+      headCancerDecision.setStatus(StatusCode.REQUESTED);
+      headCancerDecision.setReason(ReasonSksCode.HEAD_AND_CANCER_DECISION);
+      LocalDateTime headCancerDecisionTime = now.minusDays(20);
+      headCancerDecision.setAuthoredOn(headCancerDecisionTime);
+
+      referrals.add(headCancerDecision);
+
+      Referral headCancerTreatment = new Referral();
+      headCancerTreatment.setPatient(patient);
+      headCancerTreatment.setStatus(StatusCode.REQUESTED);
+      headCancerTreatment.setReason(ReasonSksCode.HEAD_AND_CANCER_INITIAL_TREATMENT_START);
+      LocalDateTime headCancerTreatmentTime = now.minusDays(15);
+      headCancerTreatment.setAuthoredOn(headCancerTreatmentTime);
+
+      referrals.add(headCancerTreatment);
+
+      Referral headCancerFollowUp = new Referral();
+      headCancerFollowUp.setPatient(patient);
+      headCancerFollowUp.setStatus(StatusCode.REQUESTED);
+      headCancerFollowUp.setReason(ReasonSksCode.HEAD_AND_CANCER_FOLLOWUP);
+      LocalDateTime headCancerFollowUpTime = now.minusDays(10);
+      headCancerFollowUp.setAuthoredOn(headCancerFollowUpTime);
+
+      referrals.add(headCancerFollowUp);
+
+      Referral headCancerEnd = new Referral();
+      headCancerEnd.setPatient(patient);
+      headCancerEnd.setStatus(StatusCode.REQUESTED);
+      headCancerEnd.setReason(ReasonSksCode.HEAD_AND_CANCER_END);
+      LocalDateTime headCancerEndTime = now.minusDays(5);
+      headCancerEnd.setAuthoredOn(headCancerEndTime);
+
+      referrals.add(headCancerEnd);
     }
+
+//
+//    for (int i = 0; i < NR_OF_REFERRALS; i++) {
+//      Referral referral = new Referral();
+//      if (random.nextDouble() < 0.8) {
+//        referral.setStatus(StatusCode.REQUESTED);
+//      } else {
+//        referral.setStatus(info.mhylle.playground.lpr3.model.SKS.referral.StatusCode.values()[random.nextInt(info.mhylle.playground.lpr3.model.SKS.referral.StatusCode.values().length)]);
+//      }
+//
+//      referral.setReason(ReasonSksCode.values()[random.nextInt(ReasonSksCode.values().length)]);
+//
+//      if (encounters != null && encounters.size() > 0) {
+//        if (random.nextDouble() < 0.75) {
+//          Encounter encounter = encounters.get(random.nextInt(encounters.size()));
+//          referral.setEncounter(encounter);
+//        }
+//      }
+//      referrals.add(referral);
+//    }
     saveReferrals();
   }
 
