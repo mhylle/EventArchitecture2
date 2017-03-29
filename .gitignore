@@ -23,7 +23,7 @@ gradle-app.setting
 .idea/tasks.xml
 lib/
 .idea/
-
+*.iml
 
 # Gradle:
 .idea/gradle.xml
