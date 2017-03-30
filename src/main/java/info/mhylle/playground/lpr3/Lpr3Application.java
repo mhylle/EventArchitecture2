@@ -2,7 +2,7 @@ package info.mhylle.playground.lpr3;
 
 import info.mhylle.playground.lpr3.data.Repository;
 import info.mhylle.playground.lpr3.model.*;
-import info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode;
+import info.mhylle.playground.lpr3.model.SKS.episodeofcareelement.StatusCode;
 import info.mhylle.playground.lpr3.rules.Rule;
 import info.mhylle.playground.lpr3.rules.RuleEngine;
 

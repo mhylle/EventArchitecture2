@@ -1,10 +1,11 @@
 package info.mhylle.playground.lpr3.model;
 
 import info.mhylle.playground.lpr3.adaptors.ConditionIdAdapter;
+import info.mhylle.playground.lpr3.adaptors.EpisodeOfCareElementIdAdapter;
 import info.mhylle.playground.lpr3.adaptors.PatientIdAdapter;
 import info.mhylle.playground.lpr3.adaptors.ReferralIdAdapter;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
-import info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode;
+import info.mhylle.playground.lpr3.model.SKS.episodeofcareelement.StatusCode;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -17,8 +18,8 @@ public class EpisodeOfCareElement
   private Condition condition;
   private Patient patient;
   private SorCode responsibleUnit;
-  private StatusCode status;
   private Period period;
+  private EpisodeOfCareElement previous;
 
 
   public EpisodeOfCareElement()
@@ -35,17 +36,6 @@ public class EpisodeOfCareElement
   public void setId(String id)
   {
     this.id = UUID.fromString(id);
-  }
-
-  @XmlElement(name = "Status")
-  public StatusCode getStatus()
-  {
-    return status;
-  }
-
-  public void setStatus(StatusCode status)
-  {
-    this.status = status;
   }
 
   @XmlElement(name = "ResponsibleUnit")
@@ -104,5 +94,15 @@ public class EpisodeOfCareElement
   public void setCondition(Condition condition)
   {
     this.condition = condition;
+  }
+
+  @XmlElement(name = "Previous")
+  @XmlJavaTypeAdapter(EpisodeOfCareElementIdAdapter.class)
+  public EpisodeOfCareElement getPrevious() {
+    return previous;
+  }
+
+  public void setPrevious(EpisodeOfCareElement previous) {
+    this.previous = previous;
   }
 }

@@ -25,6 +25,7 @@ public class Repository
   private List<Condition> conditions;
   private List<EpisodeOfCareElement> episodeOfCareElements;
   private List<Referral> referrals;
+  private List<EpisodeOfCare> episodesOfCare;
 
   private Repository()
   {
@@ -45,6 +46,7 @@ public class Repository
     patients = new ArrayList<>();
     encounters = new ArrayList<>();
     episodeOfCareElements = new ArrayList<>();
+    episodesOfCare = new ArrayList<>();
     referrals = new ArrayList<>();
     conditions = new ArrayList<>();
 
@@ -222,6 +224,14 @@ public class Repository
     return episodeOfCareElements;
   }
 
+  public List<EpisodeOfCare> getEpisodesOfCare() {
+    return episodesOfCare;
+  }
+
+  public void addEpisodeOfCare(EpisodeOfCare episodeOfCare) {
+    this.episodesOfCare.add(episodeOfCare);
+  }
+
   public List<Referral> getReferrals()
   {
     return referrals;
@@ -260,4 +270,6 @@ public class Repository
     conditions.set(i, condition);
     saveConditions();
   }
+
+
 }

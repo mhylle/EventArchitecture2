@@ -5,9 +5,6 @@ import info.mhylle.playground.lpr3.model.Condition;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-/**
- * Created by mnh on 02-02-2017.
- */
 public class ConditionIdAdapter extends XmlAdapter<String, Condition>
 {
 

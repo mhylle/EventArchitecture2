@@ -132,7 +132,7 @@ public class DataGenerator {
       SorCode responsibleUnit = responsibleUnits.get(random.nextInt(responsibleUnits.size()));
       eoce.setResponsibleUnit(responsibleUnit);
 
-      eoce.setStatus(info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode.values()[random.nextInt(info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode.values().length)]);
+      eoce.setStatus(info.mhylle.playground.lpr3.model.SKS.episodeofcareelement.StatusCode.values()[random.nextInt(info.mhylle.playground.lpr3.model.SKS.episodeofcareelement.StatusCode.values().length)]);
       if (patients != null && patients.size() > 0) {
         Patient patient = patients.get(random.nextInt(patients.size()));
         eoce.setPatient(patient);
