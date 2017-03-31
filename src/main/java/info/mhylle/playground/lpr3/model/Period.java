@@ -6,9 +6,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
-/**
- * Created by mhyll on 12-02-2017.
- */
 public class Period
 {
   private LocalDateTime startTime;
@@ -52,5 +49,19 @@ public class Period
   public void setEndTime(LocalDateTime endTime)
   {
     this.endTime = endTime;
+  }
+
+  public int compareTo(Period p) {
+    if (startTime == null) {
+      return -1;
+    }
+
+    LocalDateTime p2s = p.startTime;
+
+    if (p2s == null) {
+      return 1;
+    }
+
+    return startTime.compareTo(p2s);
   }
 }

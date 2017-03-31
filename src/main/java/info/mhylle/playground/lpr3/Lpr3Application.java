@@ -2,6 +2,7 @@ package info.mhylle.playground.lpr3;
 
 import info.mhylle.playground.lpr3.data.Repository;
 import info.mhylle.playground.lpr3.model.*;
+import info.mhylle.playground.lpr3.model.SKS.ReasonSksCode;
 import info.mhylle.playground.lpr3.model.SKS.episodeofcareelement.StatusCode;
 import info.mhylle.playground.lpr3.rules.Rule;
 import info.mhylle.playground.lpr3.rules.RuleEngine;
@@ -79,13 +80,30 @@ public class Lpr3Application extends Application
     });
   }
 
+  private EpisodeOfCare getEpisodeOfCare(Referral referral, Patient p) {
+    List<EpisodeOfCare> episodesOfCare = p.getEpisodesOfCare();
+    if (!episodesOfCare.isEmpty()) {
+      episodesOfCare.sort((o1, o2) -> o1.getPeriod().compareTo(o2.getPeriod()));
+
+      for (EpisodeOfCare episodeOfCare : episodesOfCare) {
+        ReasonSksCode reason = referral.getReason();
+        if (episodeOfCare.getCondition().getCode().equals(reason.getCode())) {
+          return episodeOfCare;
+        }
+      }
+    }
+    return null;
+  }
+  private EpisodeOfCareElement getEpisodeOfCareElement(Referral referral) {
+    return null;
+  }
+
   private void createEpisodeOfCareElement(Referral referral, Patient p)
   {
     // there are no episode of care elements, create one for this referral.
     EpisodeOfCareElement eoce = new EpisodeOfCareElement();
     eoce.setReferral(referral);
     eoce.setPatient(referral.getPatient());
-    eoce.setStatus(StatusCode.ACTIVE);
     Period period = new Period();
     period.setStartTime(LocalDateTime.now());
     if (referral.getEncounter() != null) {
@@ -94,21 +112,6 @@ public class Lpr3Application extends Application
           .findAny().orElse(null);
       if (e != null) {
         period.setStartTime(e.getPeriod().getStartTime());
-        switch (e.getStatus()) {
-          case ARRIVED:
-            eoce.setStatus(StatusCode.ACTIVE);
-            break;
-          case PLANNED:
-            eoce.setStatus(StatusCode.PLANNED);
-            break;
-          case INPROGRESS:
-            eoce.setStatus(StatusCode.ACTIVE);
-          case ONLEAVE:
-            eoce.setStatus(StatusCode.ONHOLD);
-            break;
-          default:
-            eoce.setStatus(StatusCode.ACTIVE);
-        }
       }
     }
     eoce.setPeriod(period);
