@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Repository
@@ -26,6 +27,7 @@ public class Repository
   private List<EpisodeOfCareElement> episodeOfCareElements;
   private List<Referral> referrals;
   private List<EpisodeOfCare> episodesOfCare;
+  private Arrays episodeOfCare;
 
   private Repository()
   {
@@ -270,6 +272,5 @@ public class Repository
     conditions.set(i, condition);
     saveConditions();
   }
-
 
 }

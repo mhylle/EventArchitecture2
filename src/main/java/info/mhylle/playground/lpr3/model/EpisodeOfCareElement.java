@@ -1,11 +1,7 @@
 package info.mhylle.playground.lpr3.model;
 
-import info.mhylle.playground.lpr3.adaptors.ConditionIdAdapter;
-import info.mhylle.playground.lpr3.adaptors.EpisodeOfCareElementIdAdapter;
-import info.mhylle.playground.lpr3.adaptors.PatientIdAdapter;
-import info.mhylle.playground.lpr3.adaptors.ReferralIdAdapter;
+import info.mhylle.playground.lpr3.adaptors.*;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
-import info.mhylle.playground.lpr3.model.SKS.episodeofcareelement.StatusCode;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -19,6 +15,7 @@ public class EpisodeOfCareElement
   private Patient patient;
   private SorCode responsibleUnit;
   private Period period;
+  private EpisodeOfCare episodeOfCare;
   private EpisodeOfCareElement previous;
 
 
@@ -86,6 +83,9 @@ public class EpisodeOfCareElement
 
   @XmlElement(name = "Condition")
   @XmlJavaTypeAdapter(ConditionIdAdapter.class)
+  /**
+   * Condition will end up being used as the EpisodeOfCareLabel
+   */
   public Condition getCondition()
   {
     return condition;
@@ -98,11 +98,25 @@ public class EpisodeOfCareElement
 
   @XmlElement(name = "Previous")
   @XmlJavaTypeAdapter(EpisodeOfCareElementIdAdapter.class)
-  public EpisodeOfCareElement getPrevious() {
+  public EpisodeOfCareElement getPrevious()
+  {
     return previous;
   }
 
-  public void setPrevious(EpisodeOfCareElement previous) {
+  public void setPrevious(EpisodeOfCareElement previous)
+  {
     this.previous = previous;
+  }
+
+  @XmlElement(name = "EpisodeOfCare")
+  @XmlJavaTypeAdapter(EpisodeOfCareIdAdapter.class)
+  public EpisodeOfCare getEpisodeOfCare()
+  {
+    return episodeOfCare;
+  }
+
+  public void setEpisodeOfCare(EpisodeOfCare episodeOfCare)
+  {
+    this.episodeOfCare = episodeOfCare;
   }
 }
