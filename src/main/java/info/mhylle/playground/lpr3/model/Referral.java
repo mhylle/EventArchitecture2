@@ -1,6 +1,5 @@
 package info.mhylle.playground.lpr3.model;
 
-import info.mhylle.playground.lpr3.adaptors.EncounterIdAdapter;
 import info.mhylle.playground.lpr3.adaptors.LocalDateTimeAdapter;
 import info.mhylle.playground.lpr3.adaptors.PatientIdAdapter;
 import info.mhylle.playground.lpr3.model.SKS.ReasonSksCode;
@@ -15,7 +14,6 @@ public class Referral {
   private UUID id;
   private StatusCode status;
   private Patient patient;
-  private Encounter encounter;
   private ReasonSksCode reason;
   private LocalDateTime authoredOn;
 
@@ -60,23 +58,14 @@ public class Referral {
     this.reason = reason;
   }
 
-  @XmlElement(name = "Encounter")
-  @XmlJavaTypeAdapter(EncounterIdAdapter.class)
-  public Encounter getEncounter() {
-    return encounter;
-  }
-
-  public void setEncounter(Encounter encounter) {
-    this.encounter = encounter;
-  }
-
-  public void setAuthoredOn(LocalDateTime authoredOn) {
-    this.authoredOn = authoredOn;
-  }
 
   @XmlElement(name = "AuthoredOn")
   @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
   public LocalDateTime getAuthoredOn() {
     return authoredOn;
+  }
+
+  public void setAuthoredOn(LocalDateTime authoredOn) {
+    this.authoredOn = authoredOn;
   }
 }

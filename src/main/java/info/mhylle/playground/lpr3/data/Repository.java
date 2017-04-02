@@ -253,7 +253,6 @@ public class Repository
 
   public void updateReferral(Referral referral)
   {
-    RuleEngine.getInstance().run(referral);
     int i = referrals.indexOf(referral);
     referrals.set(i, referral);
     saveReferrals();

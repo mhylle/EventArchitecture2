@@ -27,21 +27,14 @@ public class RuleEngine
     rules.add(rule);
   }
 
-  public void run()
+  public boolean run(Object o)
   {
-    for (Rule rule : rules) {
-      if (rule.handle()) {
-        rule.process();
-      }
-    }
-  }
-
-  public void run(Object o)
-  {
+    boolean result = true;
     for (Rule rule : rules) {
       if (rule.handle(o)) {
-        rule.process(o);
+        result &= rule.process(o);
       }
     }
+    return result;
   }
 }
