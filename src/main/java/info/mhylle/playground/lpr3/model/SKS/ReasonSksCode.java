@@ -16,7 +16,30 @@ public enum ReasonSksCode
   PANCREAS_CANCER_DECISION("AFB07C"),
   PANCREAS_CANCER_INITIAL_TREATMENT_START("AFB07F"),
   PANCREAS_CANCER_FOLLOWUP("AFB07P"),
-  PANCREAS_CANCER_END("AFB07X");
+  PANCREAS_CANCER_END("AFB07X"),
+
+  AAF("Booking"),
+  AAF1("Indlæggelse"),
+  AAF11("Genindlæggelse"),
+  AAF12("Indlæggelse i brugerstyret seng"),
+  AAF13("Udskrivning fra brugerstyret seng"),
+  AAF2("Ambulant"),
+  AAF20("Forundersøgelse"),
+  AAF21("Førstegangsbesøg"),
+  AAF22("Ambulant besøg"),
+  AAF23("Kontrolbesøg"),
+  AAF3("Skadestuebesøg"),
+  AAF4("Tilsyn"),
+  AAF5("Telefonkontakt"),
+  AAF6("Hjemmebesøg"),
+  AAF7("Udebesøg"),
+  AAF8("Andre 'booking/henvisning'"),
+  AAF81("Planlagt fødsel"),
+  AAF82("Virksomhedsbesøg"),
+  AAF83("Institutionsbesøg"),
+  AAF84("Stuegang"),
+  AAF85("Henvisning uden tidsbestilling (drop in)"),
+  AAF9("Administrativ kontakt");
 
   private String code;
 

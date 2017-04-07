@@ -2,6 +2,7 @@ package info.mhylle.playground.lpr3.model;
 
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
+import info.mhylle.playground.lpr3.model.SKS.condition.StatusCode;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.Arrays;
@@ -18,6 +19,7 @@ public class Procedure
   private SksCode indication;
   private SorCode producer;
   private Period period;
+  private StatusCode status;
 
   public Procedure()
   {
@@ -108,6 +110,17 @@ public class Procedure
   public void setPeriod(Period period)
   {
     this.period = period;
+  }
+
+  @XmlElement(name = "Status")
+  public StatusCode getStatus()
+  {
+    return status;
+  }
+
+  public void setStatus(StatusCode status)
+  {
+    this.status = status;
   }
 
   @Override

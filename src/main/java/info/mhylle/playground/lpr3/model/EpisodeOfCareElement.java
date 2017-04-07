@@ -5,6 +5,8 @@ import info.mhylle.playground.lpr3.model.SKS.SorCode;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class EpisodeOfCareElement
@@ -16,12 +18,16 @@ public class EpisodeOfCareElement
   private SorCode responsibleUnit;
   private Period period;
   private EpisodeOfCare episodeOfCare;
+  private List<Encounter> encounters;
+  private List<Procedure> procedures;
   private EpisodeOfCareElement previous;
 
 
   public EpisodeOfCareElement()
   {
     id = UUID.randomUUID();
+    encounters = new ArrayList<>();
+    procedures = new ArrayList<>();
   }
 
   @XmlElement(name = "Id")
@@ -118,5 +124,29 @@ public class EpisodeOfCareElement
   public void setEpisodeOfCare(EpisodeOfCare episodeOfCare)
   {
     this.episodeOfCare = episodeOfCare;
+  }
+
+  @XmlElement(name = "Encounters")
+  @XmlJavaTypeAdapter(EncounterIdAdapter.class)
+  public List<Encounter> getEncounters()
+  {
+    return encounters;
+  }
+
+  public void addEncounter(Encounter encounter)
+  {
+    encounters.add(encounter);
+  }
+
+  @XmlElement(name = "Procedures")
+  @XmlJavaTypeAdapter(ProcedureIdAdapter.class)
+  public List<Procedure> getProcedures()
+  {
+    return procedures;
+  }
+
+  public void addProcedure(Procedure procedure)
+  {
+    procedures.add(procedure);
   }
 }

@@ -6,6 +6,8 @@ import info.mhylle.playground.lpr3.model.SKS.encounter.StatusCode;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Encounter
@@ -15,10 +17,16 @@ public class Encounter
   private EncounterClass encounterClass;
   private Patient patient;
   private Period period;
+  private Condition actionDiagnosis;
+  private List<Condition> biDiagnoses;
+  private List<Procedure> procedures;
+
 
   public Encounter()
   {
     id = UUID.randomUUID();
+    biDiagnoses = new ArrayList<>();
+    procedures = new ArrayList<>();
   }
 
   @XmlElement(name = "Id")
@@ -75,5 +83,38 @@ public class Encounter
   public void setPeriod(Period period)
   {
     this.period = period;
+  }
+
+  @XmlElement(name = "ActionDiagnosis")
+  public Condition getActionDiagnosis()
+  {
+    return actionDiagnosis;
+  }
+
+  public void setActionDiagnosis(Condition actionDiagnosis)
+  {
+    this.actionDiagnosis = actionDiagnosis;
+  }
+
+  @XmlElement(name = "BiDiagnosis")
+  public List<Condition> getBiDiagnoses()
+  {
+    return biDiagnoses;
+  }
+
+  public void addBiDiagnosis(Condition biDiagnosis)
+  {
+    this.biDiagnoses.add(biDiagnosis);
+  }
+
+  @XmlElement(name = "Procedures")
+  public List<Procedure> getProcedures()
+  {
+    return procedures;
+  }
+
+  public void addProcedure(Procedure procedure)
+  {
+    procedures.add(procedure);
   }
 }

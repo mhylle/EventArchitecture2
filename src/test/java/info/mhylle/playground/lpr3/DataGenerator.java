@@ -6,6 +6,7 @@ import info.mhylle.playground.lpr3.model.*;
 import info.mhylle.playground.lpr3.model.SKS.ReasonSksCode;
 import info.mhylle.playground.lpr3.model.SKS.SksCode;
 import info.mhylle.playground.lpr3.model.SKS.SorCode;
+import info.mhylle.playground.lpr3.model.SKS.condition.ConditionCode;
 import info.mhylle.playground.lpr3.model.SKS.condition.VerificationStatusCode;
 import info.mhylle.playground.lpr3.model.SKS.encounter.EncounterClass;
 import info.mhylle.playground.lpr3.model.SKS.patient.GenderType;
@@ -15,28 +16,33 @@ import org.junit.Test;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DataGenerator
 {
   private static final int NR_OF_PATIENTS = 30;
   private static final int NR_OF_EPISODES_OF_CARE = 4;
-  private static final int NR_OF_REFERRALS = 6;
+  //  private static final int NR_OF_REFERRALS = 6;
   private static final int NR_OF_ENCOUNTERS = 8;
   private static final String ENCOUNTERS_SAVEFILE = "c:/temp/EventArchitecture/encounters.json";
   private static final String EPISODEOFCAREELEMENTS_SAVEFILE = "c:/temp/EventArchitecture/episodeOfCareElements.json";
+  private static final String EPISODESOFCARE_SAVEFILE = "c:/temp/EventArchitecture/episodesOfCare.json";
   private static final String PATIENTS_SAVEFILE = "c:/temp/EventArchitecture/patients.json";
   private static final String REFERRALS_SAVEFILE = "c:/temp/EventArchitecture/referrals.json";
+  private static final String PROCEDURES_SAVEFILE = "c:/temp/EventArchitecture/procedures.json";
   private List<String> firstnames = new ArrayList<>();
   private List<String> lastnames = new ArrayList<>();
-  private List<SksCode> labels = new ArrayList<>();
   private List<SorCode> responsibleUnits = new ArrayList<>();
   private List<Patient> patients;
   private List<Encounter> encounters;
   private List<Referral> referrals;
   private List<EpisodeOfCareElement> episodeOfCareElements;
+  private List<EpisodeOfCare> episodesOfCare;
+  private List<Procedure> procedures;
 
   @Before
   public void populateLists()
@@ -68,10 +74,6 @@ public class DataGenerator
     lastnames.add("Kragh");
     lastnames.add("Larsen");
 
-    labels.add(SksCode.LABEL_CANCER);
-    labels.add(SksCode.LABEL_DIABETES);
-    labels.add(SksCode.LABEL_KOL);
-
     responsibleUnits.add(SorCode.AAR_KIR_CLI);
     responsibleUnits.add(SorCode.AROS);
     responsibleUnits.add(SorCode.ODD_OPT_LHANS);
@@ -79,47 +81,180 @@ public class DataGenerator
     responsibleUnits.add(SorCode.OPT_NS_THR_LGRYM);
   }
 
+
+  @Test
+  public void createPatientEpisodesOfCare()
+  {
+    Random random = new Random();
+    Patient patient = generatePatient(random);
+
+    EpisodeOfCare episodeOfCare = generateBackPainEpisodeOfCare(patient);
+    generateBackPainEpisodeOfCareElements(episodeOfCare);
+    savePatients();
+    saveEpisodesOfCare();
+    saveEpisodesOfCareElements();
+    saveEncounters();
+    saveReferrals();
+    saveProcedures();
+  }
+
+  private void generateBackPainEpisodeOfCareElements(EpisodeOfCare episodeOfCare)
+  {
+    loadEpisodeOfCareElements();
+    loadProcedures();
+    loadReferrals();
+
+    EpisodeOfCareElement initialEoce = new EpisodeOfCareElement();
+    initialEoce.setPatient(episodeOfCare.getPatient());
+    Condition neckOrBackPainCondition = new Condition();
+    neckOrBackPainCondition.setCode(ConditionCode.DM540);
+    initialEoce.setCondition(neckOrBackPainCondition);
+    initialEoce.setEpisodeOfCare(episodeOfCare);
+    Referral initialReferral = new Referral();
+    initialReferral.setPatient(episodeOfCare.getPatient());
+    initialReferral.setReason(ReasonSksCode.AAF3);
+    initialReferral.setStatus(StatusCode.ACCEPTED);
+    initialEoce.setReferral(initialReferral);
+    LocalDateTime start = episodeOfCare.getPeriod().getStartTime();
+    LocalDateTime end = episodeOfCare.getPeriod().getStartTime().plusHours(2);
+    initialEoce.setPeriod(new Period(start, end));
+    initialEoce.setResponsibleUnit(SorCode.A662037);
+
+    referrals.add(initialReferral);
+    episodeOfCareElements.add(initialEoce);
+
+    LocalDateTime visitTime = createDate(end, end.plusDays(ThreadLocalRandom.current().nextInt(30)));
+    for (int i = 0; i < 3; i++) {
+      EpisodeOfCareElement episodeOfCareElement = new EpisodeOfCareElement();
+      episodeOfCareElement.setPatient(episodeOfCare.getPatient());
+      episodeOfCareElement.setCondition(neckOrBackPainCondition);
+      episodeOfCareElement.setEpisodeOfCare(episodeOfCare);
+      Referral referral = new Referral();
+      referral.setPatient(episodeOfCare.getPatient());
+      referral.setReason(ReasonSksCode.AAF3);
+      referral.setStatus(StatusCode.ACCEPTED);
+      episodeOfCareElement.setReferral(referral);
+      episodeOfCareElement.setPeriod(new Period(visitTime, visitTime.plusHours(2)));
+      visitTime = createDate(episodeOfCareElement.getPeriod().getEndTime(), visitTime.plusDays(ThreadLocalRandom.current().nextInt(30)));
+      episodeOfCareElement.setResponsibleUnit(SorCode.A662037);
+
+      referrals.add(referral);
+      episodeOfCareElements.add(episodeOfCareElement);
+    }
+
+    EpisodeOfCareElement backPainTreatmentEoce = new EpisodeOfCareElement();
+    backPainTreatmentEoce.setPatient(episodeOfCare.getPatient());
+    Condition neckPainCondition = new Condition();
+    neckPainCondition.setCode(ConditionCode.DM540A);
+    backPainTreatmentEoce.setCondition(neckPainCondition);
+    backPainTreatmentEoce.setEpisodeOfCare(episodeOfCare);
+    Referral referral = new Referral();
+    referral.setPatient(episodeOfCare.getPatient());
+    referral.setReason(ReasonSksCode.AAF1);
+    referral.setStatus(StatusCode.ACCEPTED);
+    backPainTreatmentEoce.setReferral(referral);
+    backPainTreatmentEoce.setPeriod(new Period(visitTime, visitTime.plusHours(2)));
+    createDate(backPainTreatmentEoce.getPeriod().getEndTime(), visitTime.plusDays(ThreadLocalRandom.current().nextInt(30) + 10));
+    backPainTreatmentEoce.setResponsibleUnit(SorCode.A6620066);
+
+    Encounter admissionEncounter = createNeckPainAdmissionEncounter(episodeOfCare, backPainTreatmentEoce, neckPainCondition);
+
+    LocalDateTime procedureTime = admissionEncounter.getPeriod().getStartTime().plusHours(2);
+    for (int i = 0; i < 5; i++) {
+      Procedure procedure = new Procedure();
+      procedure.setActionSpecification(SksCode.OPERATION_OTHER);
+      procedure.setPeriod(new Period(procedureTime, procedureTime.plusHours(4)));
+      procedureTime = procedureTime.plusDays(1);
+      procedure.setStatus(info.mhylle.playground.lpr3.model.SKS.condition.StatusCode.FINISHED);
+      admissionEncounter.addProcedure(procedure);
+      procedures.add(procedure);
+    }
+
+
+    episodeOfCareElements.add(backPainTreatmentEoce);
+
+  }
+
+  private Encounter createNeckPainAdmissionEncounter(EpisodeOfCare episodeOfCare, EpisodeOfCareElement backPainTreatmentEoce, Condition neckPainCondition)
+  {
+    loadEncounters();
+    Encounter admissionEncounter = new Encounter();
+    admissionEncounter.setPatient(episodeOfCare.getPatient());
+    admissionEncounter.setPeriod(new Period(backPainTreatmentEoce.getPeriod().getStartTime(), backPainTreatmentEoce.getPeriod().getEndTime().minusDays(4)));
+    admissionEncounter.setStatus(info.mhylle.playground.lpr3.model.SKS.encounter.StatusCode.FINISHED);
+    admissionEncounter.setActionDiagnosis(neckPainCondition);
+    admissionEncounter.setEncounterClass(EncounterClass.INPATIENT);
+    backPainTreatmentEoce.addEncounter(admissionEncounter);
+    encounters.add(admissionEncounter);
+    return admissionEncounter;
+  }
+
+  private Patient generatePatient(Random random)
+  {
+    loadPatients();
+    Patient p = new Patient();
+    String firstName = firstnames.get(new Random().nextInt(firstnames.size()));
+    String lastName = lastnames.get(new Random().nextInt(lastnames.size()));
+    p.setName(firstName + " " + lastName);
+    LocalDateTime startDate = LocalDateTime.of(1970, 1, 1, 0, 0);
+    LocalDateTime endDate = LocalDateTime.of(2000, 1, 1, 0, 0);
+    LocalDateTime birthday = createDate(startDate, endDate);
+    p.setBirthday(birthday);
+    String alternativeId = birthday.getDayOfMonth() < 10 ? "0" + birthday.getDayOfMonth() : "" + birthday.getDayOfMonth();
+    alternativeId += birthday.getMonthValue() < 10 ? "0" + birthday.getMonthValue() : "" + birthday.getMonthValue();
+    alternativeId += birthday.getYear();
+    for (int j = 0; j < 4; j++) {
+      int nextInt = random.nextInt(10);
+      alternativeId += nextInt;
+    }
+
+    p.setAlternativeId(alternativeId);
+    double percentage = random.nextDouble();
+    if (percentage > 0.95) {
+      p.setGender(GenderType.OTHER);
+    } else if (percentage > 0.9) {
+      p.setGender(GenderType.UNKNOWN);
+    } else {
+      if (random.nextDouble() > 0.5) {
+        p.setGender(GenderType.FEMALE);
+      } else {
+        p.setGender(GenderType.MALE);
+      }
+    }
+
+    p.setGender(GenderType.values()[random.nextInt(GenderType.values().length)]);
+    patients.add(p);
+    return p;
+
+  }
+
+
+  private EpisodeOfCare generateBackPainEpisodeOfCare(Patient patient)
+  {
+    loadEpisodesOfCare();
+    LocalDateTime birthday = patient.getBirthday();
+    EpisodeOfCare episodeOfCare = new EpisodeOfCare();
+    Condition condition = new Condition();
+    condition.setCode(ConditionCode.DM54);
+    episodeOfCare.setCondition(condition);
+    episodeOfCare.setPatient(patient);
+    Period period = new Period();
+    period.setStartTime(createDate(birthday, LocalDateTime.now()));
+    episodeOfCare.setPeriod(period);
+    episodeOfCare.setStatus(info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode.ACTIVE);
+    episodesOfCare.add(episodeOfCare);
+    return episodeOfCare;
+  }
+
+
   @Test
   public void generatePatients()
   {
     loadPatients();
     Random random = new Random();
     for (int i = 0; i < NR_OF_PATIENTS; i++) {
-      Patient p = new Patient();
-      String firstName = firstnames.get(new Random().nextInt(firstnames.size()));
-      String lastName = lastnames.get(new Random().nextInt(lastnames.size()));
-      p.setName(firstName + " " + lastName);
-      String alternativeId = "";
-      for (int j = 0; j < 10; j++) {
-        int nextInt = random.nextInt(10);
-        if (j == 2 || j == 4) {
-          if (nextInt == 0) {
-            nextInt = 1;
-          }
-        }
-        alternativeId += nextInt;
-      }
-      p.setAlternativeId(alternativeId);
-      double percentage = random.nextDouble();
-      if (percentage > 0.95) {
-        p.setGender(GenderType.OTHER);
-      } else if (percentage > 0.9) {
-        p.setGender(GenderType.UNKNOWN);
-      } else {
-        if (random.nextDouble() > 0.5) {
-          p.setGender(GenderType.FEMALE);
-        } else {
-          p.setGender(GenderType.MALE);
-        }
-      }
-
-      p.setGender(GenderType.values()[random.nextInt(GenderType.values().length)]);
-
-      LocalDateTime birthday = createDate(random, 2017, 85);
-      p.setBirthday(birthday);
+      Patient p = generatePatient(random);
       patients.add(p);
-
-//      savePatients();
     }
 
     savePatients();
@@ -361,6 +496,15 @@ public class DataGenerator
     return dateTime;
   }
 
+  private LocalDateTime createDate(LocalDateTime after, LocalDateTime before)
+  {
+    LocalDateTime result;
+
+    long millis = after.until(before, ChronoUnit.MILLIS);
+    result = after.plus(ThreadLocalRandom.current().nextLong(millis), ChronoUnit.MILLIS);
+    return result;
+  }
+
   private void savePatients()
   {
     Gson gson = new Gson();
@@ -381,6 +525,19 @@ public class DataGenerator
 
     try (FileWriter file = new FileWriter(EPISODEOFCAREELEMENTS_SAVEFILE)) {
       file.write(jSONEpisodesOfCareElements);
+      file.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void saveEpisodesOfCare()
+  {
+    Gson gson = new Gson();
+    String jSONEpisodesOfCare = gson.toJson(this.episodesOfCare);
+
+    try (FileWriter file = new FileWriter(EPISODESOFCARE_SAVEFILE)) {
+      file.write(jSONEpisodesOfCare);
       file.flush();
     } catch (IOException e) {
       e.printStackTrace();
@@ -410,6 +567,34 @@ public class DataGenerator
       file.flush();
     } catch (IOException e) {
       e.printStackTrace();
+    }
+  }
+
+  private void saveProcedures()
+  {
+    Gson gson = new Gson();
+    String jSONProcedures = gson.toJson(this.procedures);
+
+    try (FileWriter file = new FileWriter(PROCEDURES_SAVEFILE)) {
+      file.write(jSONProcedures);
+      file.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void loadProcedures()
+  {
+    Gson gson = new Gson();
+    try {
+      procedures = gson.fromJson(new FileReader(new File(PROCEDURES_SAVEFILE)), new TypeToken<List<Procedure>>()
+      {
+      }.getType());
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    if (procedures == null) {
+      procedures = new ArrayList<>();
     }
   }
 
@@ -462,7 +647,22 @@ public class DataGenerator
   {
     Gson gson = new Gson();
     try {
-      episodeOfCareElements = gson.fromJson(new FileReader(new File(EPISODEOFCAREELEMENTS_SAVEFILE)), new TypeToken<List<EpisodeOfCareElement>>()
+      episodesOfCare = gson.fromJson(new FileReader(new File(EPISODESOFCARE_SAVEFILE)), new TypeToken<List<EpisodeOfCare>>()
+      {
+      }.getType());
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    if (episodesOfCare == null) {
+      episodesOfCare = new ArrayList<>();
+    }
+  }
+
+  private void loadEpisodeOfCareElements()
+  {
+    Gson gson = new Gson();
+    try {
+      episodeOfCareElements = gson.fromJson(new FileReader(new File(EPISODEOFCAREELEMENTS_SAVEFILE)), new TypeToken<List<EpisodeOfCare>>()
       {
       }.getType());
     } catch (FileNotFoundException e) {

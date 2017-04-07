@@ -17,9 +17,11 @@ public class Repository
 {
   private static final String ENCOUNTERS_SAVEFILE = "c:/temp/EventArchitecture/encounters.json";
   private static final String EPISODEOFCAREELEMENTS_SAVEFILE = "c:/temp/EventArchitecture/episodeOfCareElements.json";
+  private static final String EPISODESOFCARE_SAVEFILE = "c:/temp/EventArchitecture/episodesOfCare.json";
   private static final String PATIENTS_SAVEFILE = "c:/temp/EventArchitecture/patients.json";
   private static final String REFERRALS_SAVEFILE = "c:/temp/EventArchitecture/referrals.json";
   private static final String CONDITIONS_SAVEFILE = "c:/temp/EventArchitecture/conditions.json";
+  private static final String PROCEDURES_SAVEFILE = "c:/temp/EventArchitecture/procedures.json";
   private static Repository _instance;
   private List<Patient> patients;
   private List<Encounter> encounters;
@@ -27,7 +29,8 @@ public class Repository
   private List<EpisodeOfCareElement> episodeOfCareElements;
   private List<Referral> referrals;
   private List<EpisodeOfCare> episodesOfCare;
-  private Arrays episodeOfCare;
+  private List<EpisodeOfCare> episodeOfCare;
+  private List<Procedure> procedures;
 
   private Repository()
   {
@@ -47,19 +50,26 @@ public class Repository
   {
     patients = new ArrayList<>();
     encounters = new ArrayList<>();
+    episodeOfCare = new ArrayList<>();
     episodeOfCareElements = new ArrayList<>();
     episodesOfCare = new ArrayList<>();
     referrals = new ArrayList<>();
     conditions = new ArrayList<>();
+    procedures = new ArrayList<>();
 
     File patientSaveFile = new File(PATIENTS_SAVEFILE);
+    File episodesOfCareSaveFile = new File(EPISODEOFCAREELEMENTS_SAVEFILE);
     File episodeOfCareElementsSaveFile = new File(EPISODEOFCAREELEMENTS_SAVEFILE);
     File contactsSaveFile = new File(ENCOUNTERS_SAVEFILE);
     File referralsSaveFile = new File(REFERRALS_SAVEFILE);
     File conditionsSaveFile = new File(CONDITIONS_SAVEFILE);
+    File proceduresSaveFile = new File(PROCEDURES_SAVEFILE);
 
     if (patientSaveFile.exists()) {
       loadPatients();
+    }
+    if (episodesOfCareSaveFile.exists()) {
+      loadEpisodesOfCare();
     }
     if (episodeOfCareElementsSaveFile.exists()) {
       loadEpisodeOfCareElements();
@@ -75,6 +85,9 @@ public class Repository
     }
     if (conditionsSaveFile.exists()) {
       loadConditions();
+    }
+    if (proceduresSaveFile.exists()) {
+      loadProcedures();
     }
   }
 
@@ -95,6 +108,18 @@ public class Repository
     Gson gson = new Gson();
     try (FileReader reader = new FileReader(new File(EPISODEOFCAREELEMENTS_SAVEFILE))) {
       episodeOfCareElements = gson.fromJson(reader, new TypeToken<List<EpisodeOfCareElement>>()
+      {
+      }.getType());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void loadEpisodesOfCare()
+  {
+    Gson gson = new Gson();
+    try (FileReader reader = new FileReader(new File(EPISODESOFCARE_SAVEFILE))) {
+      episodesOfCare = gson.fromJson(reader, new TypeToken<List<EpisodeOfCare>>()
       {
       }.getType());
     } catch (IOException e) {
@@ -138,6 +163,18 @@ public class Repository
     }
   }
 
+  private void loadProcedures()
+  {
+    Gson gson = new Gson();
+    try (FileReader reader = new FileReader(new File(PROCEDURES_SAVEFILE))) {
+      procedures = gson.fromJson(reader, new TypeToken<List<Procedure>>()
+      {
+      }.getType());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   private void savePatients()
   {
     File saveFile = new File(PATIENTS_SAVEFILE);
@@ -155,6 +192,11 @@ public class Repository
     File saveFile = new File(EPISODEOFCAREELEMENTS_SAVEFILE);
     saveData(episodeOfCareElements, saveFile);
   }
+  private void saveEpisodesOfCare()
+  {
+    File saveFile = new File(EPISODESOFCARE_SAVEFILE);
+    saveData(episodesOfCare, saveFile);
+  }
 
   private void saveContacts()
   {
@@ -166,6 +208,11 @@ public class Repository
   {
     File saveFile = new File(CONDITIONS_SAVEFILE);
     saveData(conditions, saveFile);
+  }
+  private void saveProcedures()
+  {
+    File saveFile = new File(PROCEDURES_SAVEFILE);
+    saveData(procedures, saveFile);
   }
 
   private <T> void saveData(List<T> dataList, File saveFile)
@@ -232,6 +279,7 @@ public class Repository
 
   public void addEpisodeOfCare(EpisodeOfCare episodeOfCare) {
     this.episodesOfCare.add(episodeOfCare);
+    saveEpisodesOfCare();
   }
 
   public List<Referral> getReferrals()
@@ -272,4 +320,13 @@ public class Repository
     saveConditions();
   }
 
+  public List<Procedure> getProcedures()
+  {
+    return procedures;
+  }
+  public void addProcedure(Procedure procedure)
+  {
+    procedures.add(procedure);
+    saveProcedures();
+  }
 }
