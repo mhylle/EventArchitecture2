@@ -13,7 +13,6 @@ import java.util.UUID;
 public class Referral {
   private UUID id;
   private StatusCode status;
-  private Patient patient;
   private ReasonSksCode reason;
   private LocalDateTime authoredOn;
 
@@ -37,16 +36,6 @@ public class Referral {
 
   public void setStatus(StatusCode status) {
     this.status = status;
-  }
-
-  @XmlElement(name = "Patient")
-  @XmlJavaTypeAdapter(PatientIdAdapter.class)
-  public Patient getPatient() {
-    return patient;
-  }
-
-  public void setPatient(Patient patient) {
-    this.patient = patient;
   }
 
   @XmlElement(name = "Reason")

@@ -1,26 +1,18 @@
 package info.mhylle.playground.lpr3.model;
 
-import info.mhylle.playground.lpr3.adaptors.EncounterIdAdapter;
-import info.mhylle.playground.lpr3.adaptors.PatientIdAdapter;
 import info.mhylle.playground.lpr3.model.SKS.condition.CategoryCode;
 import info.mhylle.playground.lpr3.model.SKS.condition.ConditionCode;
 import info.mhylle.playground.lpr3.model.SKS.condition.VerificationStatusCode;
 
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.UUID;
 
 public class Condition
 {
   private UUID id;
-  @NotNull
-  private Patient patient;
-  private Encounter encounter;
   private Period period;
   private CategoryCode category;
   private ConditionCode code;
-
   private VerificationStatusCode verificationStatus;
 
   public Condition()
@@ -37,30 +29,6 @@ public class Condition
   public void setId(UUID id)
   {
     this.id = id;
-  }
-
-  @XmlElement(name = "Patient")
-  @XmlJavaTypeAdapter(PatientIdAdapter.class)
-  public Patient getPatient()
-  {
-    return patient;
-  }
-
-  public void setPatient(Patient patient)
-  {
-    this.patient = patient;
-  }
-
-  @XmlElement(name = "Encounter")
-  @XmlJavaTypeAdapter(EncounterIdAdapter.class)
-  public Encounter getEncounter()
-  {
-    return encounter;
-  }
-
-  public void setEncounter(Encounter encounter)
-  {
-    this.encounter = encounter;
   }
 
   @XmlElement(name = "Period")

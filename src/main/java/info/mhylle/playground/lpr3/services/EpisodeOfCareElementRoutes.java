@@ -28,16 +28,6 @@ public class EpisodeOfCareElementRoutes
         .findFirst().orElse(null);
   }
 
-  @GET
-  @Path("/pid/{id}")
-  @Produces(MediaType.APPLICATION_JSON)
-  public List<EpisodeOfCareElement> episodeOfCareElementByPatientId(@PathParam("id") String id)
-  {
-    return Repository.getInstance().getEpisodeOfCareElements().stream()
-        .filter(episodeOfCareElement -> episodeOfCareElement.getPatient() != null && episodeOfCareElement.getPatient().getId().equals(id))
-        .collect(Collectors.toList());
-  }
-
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)

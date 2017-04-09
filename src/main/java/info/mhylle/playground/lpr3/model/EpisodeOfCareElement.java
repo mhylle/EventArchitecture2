@@ -14,10 +14,8 @@ public class EpisodeOfCareElement
   private UUID id;
   private Referral referral;
   private Condition condition;
-  private Patient patient;
   private SorCode responsibleUnit;
   private Period period;
-  private EpisodeOfCare episodeOfCare;
   private List<Encounter> encounters;
   private List<Procedure> procedures;
   private EpisodeOfCareElement previous;
@@ -50,18 +48,6 @@ public class EpisodeOfCareElement
   public void setResponsibleUnit(SorCode responsibleUnit)
   {
     this.responsibleUnit = responsibleUnit;
-  }
-
-  @XmlElement(name = "Patient")
-  @XmlJavaTypeAdapter(PatientIdAdapter.class)
-  public Patient getPatient()
-  {
-    return patient;
-  }
-
-  public void setPatient(Patient patient)
-  {
-    this.patient = patient;
   }
 
   @XmlElement(name = "Period")
@@ -112,18 +98,6 @@ public class EpisodeOfCareElement
   public void setPrevious(EpisodeOfCareElement previous)
   {
     this.previous = previous;
-  }
-
-  @XmlElement(name = "EpisodeOfCare")
-  @XmlJavaTypeAdapter(EpisodeOfCareIdAdapter.class)
-  public EpisodeOfCare getEpisodeOfCare()
-  {
-    return episodeOfCare;
-  }
-
-  public void setEpisodeOfCare(EpisodeOfCare episodeOfCare)
-  {
-    this.episodeOfCare = episodeOfCare;
   }
 
   @XmlElement(name = "Encounters")

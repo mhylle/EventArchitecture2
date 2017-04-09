@@ -6,17 +6,20 @@ import info.mhylle.playground.lpr3.model.SKS.episodeofcare.StatusCode;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class EpisodeOfCare {
   private UUID id;
-  private Patient patient;
   private Condition condition;
   private Period period;
   private StatusCode status;
+  private List<EpisodeOfCareElement> episodeOfCareElements;
 
   public EpisodeOfCare() {
     id = UUID.randomUUID();
+    episodeOfCareElements = new ArrayList<>();
   }
 
   @XmlElement(name = "Id")
@@ -26,16 +29,6 @@ public class EpisodeOfCare {
 
   public void setId(UUID id) {
     this.id = id;
-  }
-
-  @XmlElement(name = "Patient")
-  @XmlJavaTypeAdapter(PatientIdAdapter.class)
-  public Patient getPatient() {
-    return patient;
-  }
-
-  public void setPatient(Patient patient) {
-    this.patient = patient;
   }
 
   @XmlElement(name = "Condition")
@@ -64,5 +57,14 @@ public class EpisodeOfCare {
 
   public void setStatus(StatusCode status) {
     this.status = status;
+  }
+
+  @XmlElement(name = "EpisodeOfCareElements")
+  public List<EpisodeOfCareElement> getEpisodeOfCareElements() {
+    return episodeOfCareElements;
+  }
+
+  public void addEpisodeOfCareElement(EpisodeOfCareElement episodeOfCareElement) {
+    episodeOfCareElements.add(episodeOfCareElement);
   }
 }

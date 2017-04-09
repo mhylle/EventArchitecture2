@@ -16,12 +16,10 @@ public class Patient {
   private String name;
   private GenderType gender;
   private LocalDateTime birthday;
-  private List<EpisodeOfCareElement> episodeOfCareElements;
   private List<EpisodeOfCare> episodesOfCare;
 
   public Patient() {
     id = UUID.randomUUID();
-    episodeOfCareElements = new ArrayList<>();
     episodesOfCare = new ArrayList<>();
   }
 
@@ -71,22 +69,12 @@ public class Patient {
     this.birthday = birthday;
   }
 
-  public void addEpisodeOfCareElement(EpisodeOfCareElement id) {
-    episodeOfCareElements.add(id);
+  @XmlElement(name = "EpisodesOfCare")
+  public List<EpisodeOfCare> getEpisodesOfCare() {
+    return episodesOfCare;
   }
-
-  @XmlElement(name = "EpisodesOfCareElements")
-  public List<EpisodeOfCareElement> getEpisodesOfCareElements() {
-    return episodeOfCareElements;
-  }
-
 
   public void addEpisodeOfCare(EpisodeOfCare episodeOfCare) {
     episodesOfCare.add(episodeOfCare);
-  }
-
-  @XmlElement(name = "EpisodeOfCare")
-  public List<EpisodeOfCare> getEpisodesOfCare() {
-    return episodesOfCare;
   }
 }

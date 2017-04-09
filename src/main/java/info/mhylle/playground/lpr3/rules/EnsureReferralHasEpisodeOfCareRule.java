@@ -1,5 +1,6 @@
 package info.mhylle.playground.lpr3.rules;
 
+import info.mhylle.playground.lpr3.model.EpisodeOfCare;
 import info.mhylle.playground.lpr3.model.EpisodeOfCareElement;
 import info.mhylle.playground.lpr3.model.Patient;
 import info.mhylle.playground.lpr3.model.Referral;
@@ -32,23 +33,30 @@ public class EnsureReferralHasEpisodeOfCareRule implements Rule {
     System.out.println("Lpr3Application.process");
     Referral referral = (Referral) o;
 
-    Patient p = referral.getPatient();
+//    Patient p = referral.getPatient();
+//
+//    if (p != null) {
+//      List<EpisodeOfCare> episodesOfCare = p.getEpisodesOfCare();
+//      if (!episodesOfCare.isEmpty()) {
+//        for (EpisodeOfCare episodeOfCare : episodesOfCare) {
+//          List<EpisodeOfCareElement> episodeOfCareElements = episodeOfCare.getEpisodeOfCareElements();
+//          if (!episodeOfCareElements.isEmpty()) {
+//            for (EpisodeOfCareElement episodesOfCareElement : episodeOfCareElements) {
+//              if (episodesOfCareElement.getReferral() != null) {
+//                if (episodesOfCareElement.getReferral().equals(referral.getId())) {
+//                  // referral was already associated to an episode of care element, do nothing
+//                  return true;
+//                }
+//              }
+//            }
+//          } else {
+//            return false;
+//          }
+//        }
+//      }
 
-    if (p != null) {
-      List<EpisodeOfCareElement> episodesOfCareElements = p.getEpisodesOfCareElements();
-      if (!episodesOfCareElements.isEmpty()) {
-        for (EpisodeOfCareElement episodesOfCareElement : episodesOfCareElements) {
-          if (episodesOfCareElement.getReferral() != null) {
-            if (episodesOfCareElement.getReferral().equals(referral.getId())) {
-              // referral was already associated to an episode of care element, do nothing
-              return true;
-            }
-          }
-        }
-      } else {
-        return false;
-      }
-    }
+
+//    }
     return false;
   }
 }

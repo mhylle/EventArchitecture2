@@ -15,7 +15,6 @@ public class Encounter
   private UUID id;
   private StatusCode status;
   private EncounterClass encounterClass;
-  private Patient patient;
   private Period period;
   private Condition actionDiagnosis;
   private List<Condition> biDiagnoses;
@@ -60,18 +59,6 @@ public class Encounter
   public void setEncounterClass(EncounterClass encounterClass)
   {
     this.encounterClass = encounterClass;
-  }
-
-  @XmlElement(name = "Patient")
-  @XmlJavaTypeAdapter(PatientIdAdapter.class)
-  public Patient getPatient()
-  {
-    return patient;
-  }
-
-  public void setPatient(Patient patient)
-  {
-    this.patient = patient;
   }
 
   @XmlElement(name = "Period")

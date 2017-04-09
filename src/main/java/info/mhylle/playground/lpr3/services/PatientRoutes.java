@@ -1,6 +1,7 @@
 package info.mhylle.playground.lpr3.services;
 
 import info.mhylle.playground.lpr3.data.Repository;
+import info.mhylle.playground.lpr3.model.EpisodeOfCare;
 import info.mhylle.playground.lpr3.model.EpisodeOfCareElement;
 import info.mhylle.playground.lpr3.model.Patient;
 
@@ -38,10 +39,10 @@ public class PatientRoutes
   }
 
   @PUT
-  @Path("{pid}/episodeofcareelement/{eid}")
+  @Path("{pid}/episodeofcare/{eid}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response addEpisodeOfCareElement(@PathParam("pid") String pid, @PathParam("eid") String eid)
+  public Response addEpisodeOfCare(@PathParam("pid") String pid, @PathParam("eid") String eid)
   {
     System.out.println("pid = " + pid);
     List<Patient> patients = Repository.getInstance().getPatients();
@@ -53,16 +54,16 @@ public class PatientRoutes
       return Response.status(200).entity("The patient was not found").build();
     }
 
-    EpisodeOfCareElement e = Repository.getInstance().getEpisodeOfCareElements().stream()
-        .filter(episodeOfCareElement -> episodeOfCareElement.getId().toString().equals(eid))
+    EpisodeOfCare e = Repository.getInstance().getEpisodesOfCare().stream()
+        .filter(episodeOfCare -> episodeOfCare.getId().toString().equals(eid))
         .findFirst().orElse(null);
 
     if (e == null) {
-      return Response.status(200).entity("The EpisodeOfCareElement was not found.").build();
+      return Response.status(200).entity("The EpisodeOfCare was not found.").build();
     }
     if (p != null && e != null) {
-      System.out.println("adding new episode of care element to patient");
-      p.addEpisodeOfCareElement(e);
+      System.out.println("adding new episode of care  to patient");
+      p.addEpisodeOfCare(e);
       System.out.println("New p = " + p);
     }
     Repository.getInstance().updatePatient(p);
