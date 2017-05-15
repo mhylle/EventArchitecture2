@@ -24,7 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DataGenerator
 {
   private static final int NR_OF_PATIENTS = 30;
-//  private static final int NR_OF_EPISODES_OF_CARE = 4;
+  //  private static final int NR_OF_EPISODES_OF_CARE = 4;
   //  private static final int NR_OF_REFERRALS = 6;
 //  private static final int NR_OF_ENCOUNTERS = 8;
   private static final String ENCOUNTERS_SAVEFILE = "c:/temp/EventArchitecture/encounters.json";
@@ -36,7 +36,7 @@ public class DataGenerator
   private static final String CONDITIONS_SAVEFILE = "c:/temp/EventArchitecture/conditions.json";
   private List<String> firstnames = new ArrayList<>();
   private List<String> lastnames = new ArrayList<>();
-//  private List<SorCode> responsibleUnits = new ArrayList<>();
+  //  private List<SorCode> responsibleUnits = new ArrayList<>();
   private List<Patient> patients;
   private List<Encounter> encounters;
   private List<Referral> referrals;
@@ -82,6 +82,193 @@ public class DataGenerator
 //    responsibleUnits.add(SorCode.OPT_NS_THR_LGRYM);
   }
 
+
+  @Test
+  public void moveDatesToMoreRecent()
+  {
+    loadReferrals();
+    loadEncounters();
+    loadEpisodesOfCare();
+    loadPatients();
+    loadConditions();
+    loadEpisodeOfCareElements();
+    loadProcedures();
+
+
+//    for (Encounter encounter : encounters) {
+//      Period period = encounter.getPeriod();
+//      moveTimePeriod(period);
+//    }
+//    saveEncounters();
+//    for (Condition condition : conditions) {
+//      Period period = condition.getPeriod();
+//      moveTimePeriod(period);
+//    }
+//    saveConditions();
+    for (EpisodeOfCareElement episodeOfCareElement : episodeOfCareElements) {
+      Period period = episodeOfCareElement.getPeriod();
+      moveTimePeriod(period);
+    }
+    saveEpisodesOfCareElements();
+    for (Procedure procedure : procedures) {
+      Period period = procedure.getPeriod();
+      moveTimePeriod(period);
+    }
+    saveProcedures();
+
+
+//    for (EpisodeOfCare episodeOfCare : episodesOfCare) {
+//      Period period = episodeOfCare.getPeriod();
+//      LocalDateTime startTime = period.getStartTime();
+//      System.out.println("startTime before = " + startTime);
+//      startTime = startTime.plusDays(30);
+//      period.setStartTime(startTime);
+//      if (period.getEndTime() != null) {
+//        LocalDateTime endTime = period.getEndTime();
+//        endTime = endTime.plusDays(30);
+//        period.setEndTime(endTime);
+//      }
+//    }
+//    saveEpisodesOfCare();
+//    episodesOfCare = new ArrayList<>();
+//    loadEpisodesOfCare();
+//    for (EpisodeOfCare episodeOfCare : episodesOfCare) {
+//      Period period = episodeOfCare.getPeriod();
+//      LocalDateTime startTime = period.getStartTime();
+//      System.out.println("startTime after = " + startTime);
+//    }
+  }
+
+  @Test
+  public void moveDate()
+  {
+    loadReferrals();
+    loadEncounters();
+    loadEpisodesOfCare();
+    loadPatients();
+    loadConditions();
+    loadEpisodeOfCareElements();
+    loadProcedures();
+
+
+    movePatients();
+    savePatients();
+
+    moveEpisodesOfCare(episodesOfCare);
+    saveEpisodesOfCare();
+
+    for (Encounter encounter : encounters) {
+      Period period = encounter.getPeriod();
+      moveTimePeriod(period);
+    }
+    saveEncounters();
+    for (Condition condition : conditions) {
+      Period period = condition.getPeriod();
+      moveTimePeriod(period);
+    }
+    saveConditions();
+
+    moveEpisodeOfCareElements(episodeOfCareElements);
+    saveEpisodesOfCareElements();
+    for (Procedure procedure : procedures) {
+      Period period = procedure.getPeriod();
+      moveTimePeriod(period, -10);
+    }
+    saveProcedures();
+
+
+  }
+
+  private void movePatients()
+  {
+    for (Patient patient : patients) {
+      List<EpisodeOfCare> episodesOfCare = patient.getEpisodesOfCare();
+      moveEpisodesOfCare(episodesOfCare);
+    }
+  }
+
+  private void moveEpisodesOfCare(List<EpisodeOfCare> episodesOfCare)
+  {
+    for (EpisodeOfCare episodeOfCare : episodesOfCare) {
+      Period episodeOfCarePeriod = episodeOfCare.getPeriod();
+      moveTimePeriod(episodeOfCarePeriod);
+      List<EpisodeOfCareElement> episodeOfCareElements = episodeOfCare.getEpisodeOfCareElements();
+      moveEpisodeOfCareElements(episodeOfCareElements);
+      Condition episodeOfCareCondition = episodeOfCare.getCondition();
+      Period episodeOfCareConditionPeriod = episodeOfCareCondition.getPeriod();
+      moveTimePeriod(episodeOfCareConditionPeriod);
+    }
+  }
+
+  private void moveEpisodeOfCareElements(List<EpisodeOfCareElement> episodeOfCareElements)
+  {
+    for (EpisodeOfCareElement episodeOfCareElement : episodeOfCareElements) {
+      Period episodeOfCareElementPeriod = episodeOfCareElement.getPeriod();
+      moveTimePeriod(episodeOfCareElementPeriod);
+      Condition condition = episodeOfCareElement.getCondition();
+      Period conditionPeriod = condition.getPeriod();
+      moveTimePeriod(conditionPeriod);
+
+      List<Encounter> encounters = episodeOfCareElement.getEncounters();
+      moveEncounters(encounters);
+      List<Procedure> procedures = episodeOfCareElement.getProcedures();
+      for (Procedure procedure : procedures) {
+        Period procedurePeriod = procedure.getPeriod();
+        moveTimePeriod(procedurePeriod);
+      }
+    }
+  }
+
+  private void moveEncounters(List<Encounter> encounters)
+  {
+    for (Encounter encounter : encounters) {
+      Period encounterPeriod = encounter.getPeriod();
+      moveTimePeriod(encounterPeriod);
+      Condition actionDiagnosis = encounter.getActionDiagnosis();
+      Period actionDiagnosisPeriod = actionDiagnosis.getPeriod();
+      moveTimePeriod(actionDiagnosisPeriod);
+      List<Condition> biDiagnoses = encounter.getBiDiagnoses();
+      for (Condition biDiagnosis : biDiagnoses) {
+        Period biDiagnosisPeriod = biDiagnosis.getPeriod();
+        moveTimePeriod(biDiagnosisPeriod);
+      }
+      List<Procedure> procedures = encounter.getProcedures();
+      for (Procedure procedure : procedures) {
+        Period procedurePeriod = procedure.getPeriod();
+        moveTimePeriod(procedurePeriod);
+      }
+    }
+  }
+
+  private void moveTimePeriod(Period period)
+  {
+    if (period != null) {
+      LocalDateTime startTime = period.getStartTime();
+      System.out.println("startTime before = " + startTime);
+      startTime = startTime.plusDays(30);
+      period.setStartTime(startTime);
+      if (period.getEndTime() != null) {
+        LocalDateTime endTime = period.getEndTime();
+        endTime = endTime.plusDays(30);
+        period.setEndTime(endTime);
+      }
+    }
+  }
+
+  private void moveTimePeriod(Period period, int numberOfDays)
+  {
+    if (period != null) {
+      LocalDateTime startTime = period.getStartTime();
+      System.out.println("startTime before = " + startTime);
+      startTime = startTime.plusDays(numberOfDays);
+      period.setStartTime(startTime);
+      if (period.getEndTime() != null) {
+        LocalDateTime endTime = period.getEndTime();
+        endTime = endTime.plusDays(numberOfDays);
+        period.setEndTime(endTime);
+      }
+    }
+  }
 
   @Test
   public void createPatientEpisodesOfCare()
@@ -179,6 +366,7 @@ public class DataGenerator
     episodeOfCareElements.add(backPainTreatmentEoce);
 
   }
+
   private EpisodeOfCare generateBackPainEpisodeOfCare(Patient patient)
   {
     loadEpisodesOfCare();
@@ -196,6 +384,7 @@ public class DataGenerator
     patient.addEpisodeOfCare(episodeOfCare);
     return episodeOfCare;
   }
+
   private void generateCancerEpisodeOfCareElements(Patient patient, EpisodeOfCare episodeOfCare)
   {
     loadEpisodeOfCareElements();
@@ -268,6 +457,7 @@ public class DataGenerator
     episodeOfCareElements.add(loinIschiasEoce);
 
   }
+
   private EpisodeOfCare generateCancerEpisodeOfCare(Patient patient)
   {
     loadEpisodesOfCare();
@@ -338,8 +528,6 @@ public class DataGenerator
     return p;
 
   }
-
-
 
 
   @Test
@@ -682,7 +870,7 @@ public class DataGenerator
   private void saveConditions()
   {
     Gson gson = new Gson();
-    String jSONConditions= gson.toJson(this.conditions);
+    String jSONConditions = gson.toJson(this.conditions);
 
     try (FileWriter file = new FileWriter(CONDITIONS_SAVEFILE)) {
       file.write(jSONConditions);
@@ -766,6 +954,7 @@ public class DataGenerator
       episodesOfCare = new ArrayList<>();
     }
   }
+
   private void loadConditions()
   {
     Gson gson = new Gson();
@@ -785,7 +974,7 @@ public class DataGenerator
   {
     Gson gson = new Gson();
     try {
-      episodeOfCareElements = gson.fromJson(new FileReader(new File(EPISODEOFCAREELEMENTS_SAVEFILE)), new TypeToken<List<EpisodeOfCare>>()
+      episodeOfCareElements = gson.fromJson(new FileReader(new File(EPISODEOFCAREELEMENTS_SAVEFILE)), new TypeToken<List<EpisodeOfCareElement>>()
       {
       }.getType());
     } catch (FileNotFoundException e) {
